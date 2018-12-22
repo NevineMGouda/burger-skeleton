@@ -65,25 +65,28 @@ Data.prototype.initializeData = function() {
 Data.prototype.getOrderNumber = function () {
   this.currentOrderNumber += 1;
   return this.currentOrderNumber;
-}
+};
 
 Data.prototype.addOrder = function (order) {
   var orderId = this.getOrderNumber();
-  this.orders[orderId] = order.order;
+  this.orders[orderId]={};
+  this.orders[orderId].items = order.order;
   this.orders[orderId].orderId = orderId;
   this.orders[orderId].status = "not-started";
   var transactions = this.data[transactionsDataName],
-    //find out the currently highest transaction id
-    transId =  transactions[transactions.length - 1].transaction_id,
-    i = order.order.ingredients,
-    k;
-  for (k = 0; k < i.length; k += 1) {
-    transId += 1;
-    transactions.push({transaction_id: transId,
-                       ingredient_id: i[k].ingredient_id,
-                       change: - 1});
+  //find out the currently highest transaction id
+  transId =  transactions[transactions.length - 1].transaction_id,i, k;
+  var j;
+  for (j = 0; j < order.order.length; j += 1) {
+      i = order.order[j].order.ingredients;
+      for (k = 0; k < i.length; k += 1) {
+          transId += 1;
+          transactions.push({transaction_id: transId,
+              ingredient_id: i[k].ingredient_id,
+              change: - 1});
+      }
   }
-    return orderId;
+  return orderId;
 };
 
 Data.prototype.changeStock = function (item, saldo) {

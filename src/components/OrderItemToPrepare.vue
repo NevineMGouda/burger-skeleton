@@ -2,10 +2,11 @@
   <!-- Note in this component that it is using another component -->
 <div>
   <OrderItem
+    v-for="(item, key) in order"
     :ui-labels="uiLabels"
     :lang="lang"
     :order-id="orderId"
-    :order="order">
+    :order="item">
   </OrderItem>
   <button v-on:click="orderDone">
     {{uiLabels.ready}}

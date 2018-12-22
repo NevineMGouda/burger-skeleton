@@ -1,10 +1,11 @@
-<template>
+<template onload="document.refresh();">
   <div id="ordering" class="container">
-    
     <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
+
+
     <h1 id="head-line">Crafty Burger AB</h1>
     
-    <img class="example-panel" src="@/assets/exampleImage.jpg">
+    <!--<img class="example-panel" src="@/assets/exampleImage.jpg">-->
     
     <h1>{{ uiLabels.ingredients }}</h1>
 
@@ -21,23 +22,22 @@
     </div>
 
     <h1>{{ uiLabels.order }}</h1>
-    {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}, {{ price }} kr
-    <button v-on:click="placeOrder()">{{ uiLabels.placeOrder }}</button>
+    {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}
+    <p v-if="chosenIngredients.length != '0'">Item Price: {{ price }} kr </p>
     <button v-on:click="addToCart()">add to cart</button>
-
-    {{ordertocart}}
-    <h1>  {{"your order number is: " +orderNumber}}</h1>
+    <button v-on:click="goToCart()">Cart</button>
+    <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
-    <div>
-      <OrderItem 
-        v-for="(order, key) in orders"
-        v-if="order.status !== 'done'"
-        :order-id="key"
-        :order="order"
-        :ui-labels="uiLabels"
-        :lang="lang"
-        :key="key">
+    <div v-for="(order, orderkey) in orders"
+         v-if="order.status !== 'done'" :key="orderkey">
+      <OrderItem
+              v-for="(item, key) in order.items"
+              :order-id="orderkey"
+              :order="item"
+              :lang="lang"
+              :ui-labels="uiLabels"
+              :key="key">
       </OrderItem>
     </div>
   </div>
@@ -80,6 +80,7 @@ export default {
     this.$store.state.socket.on('orderNumber', function (data) {
       this.orderNumber = data;
     }.bind(this));
+    this.reloadPage();
   },
   methods: {
     addToOrder: function (item) {
@@ -123,19 +124,35 @@ export default {
                 ingredients: this.chosenIngredients,
                 price: this.price
             };
-        // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
-        this.$store.state.socket.emit('addItem', {order: order});
-        // io.emit('addItem', 'second');
-        // this.$store.commit('changeHello', 'second');
-        console.log("ana honaaaa fi al ordering");
-        // this.ordertocart = this.$store.getters.getHello;
-        //set all counters to 0. Notice the use of $refs
-        for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-            this.$refs.ingredient[i].resetCounter();
+        if(this.chosenIngredients.length===0){
+            alert("No item is selected to add to cart!");
         }
-        this.price = 0;
-        this.chosenIngredients = [];
+        else{
+          // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
+          this.$store.state.socket.emit('addItem', {order: order});
+          //set all counters to 0. Notice the use of $refs
+          for (i = 0; i < this.$refs.ingredient.length; i += 1) {
+              this.$refs.ingredient[i].resetCounter();
+          }
+          this.price = 0;
+          this.chosenIngredients = [];
+        }
     },
+
+    goToCart: function(){
+        location.href = "#/cart";
+    },
+    reloadPage: function(){
+        if (localStorage.getItem('reloaded')) {
+            // The page was just reloaded. Clear the value from local storage
+            // so that it will reload the next time this page is visited.
+            localStorage.removeItem('reloaded');
+        } else {
+            // Set a flag so that we know not to reload the page twice.
+            localStorage.setItem('reloaded', '1');
+            location.reload();
+        }
+    }
   }
 }
 

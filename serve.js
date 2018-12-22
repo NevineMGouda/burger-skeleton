@@ -53,9 +53,7 @@ io.on('connection', function (socket) {
   ////////////////////////////
     // When someone add to cart something
     socket.on('addItem', function (cartItem) {
-        // var orderIdAndName = data.addOrder(order);
         // // send updated info to all connected clients, note the use of io instead of socket
-        // socket.emit('orderNumber', orderIdAndName);
         io.emit('addItem2', cartItem);
     });
   ////////////////////////////

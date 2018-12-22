@@ -7,19 +7,20 @@
       v-if="order.status !== 'done'"
       v-on:done="markDone(key)"
       :order-id="key"
-      :order="order" 
+      :order="order.items"
       :ui-labels="uiLabels"
       :lang="lang"
       :key="key">
     </OrderItemToPrepare>
   </div>
   <h1>{{ uiLabels.ordersFinished }}</h1>
-  <div>
+
+  <div v-for="(order, orderkey) in orders"
+    v-if="order.status === 'done'" :key="orderkey">
     <OrderItem
-      v-for="(order, key) in orders"
-      v-if="order.status === 'done'"
-      :order-id="key"
-      :order="order"
+      v-for="(item, key) in order.items"
+      :order-id="orderkey"
+      :order="item"
       :lang="lang"
       :ui-labels="uiLabels"
       :key="key">
