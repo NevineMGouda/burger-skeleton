@@ -5,6 +5,7 @@
     v-for="(item, key) in order"
     :ui-labels="uiLabels"
     :lang="lang"
+    :key="key"
     :order-id="orderId"
     :order="item">
   </OrderItem>

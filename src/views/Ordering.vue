@@ -122,7 +122,9 @@ export default {
             //Wrap the order in an object
             order = {
                 ingredients: this.chosenIngredients,
-                price: this.price
+                price: this.price,
+                quantity: 1,
+                stock: 3 //TODO: Remove 3 and get the smallest stock value for all items
             };
         if(this.chosenIngredients.length===0){
             alert("No item is selected to add to cart!");
