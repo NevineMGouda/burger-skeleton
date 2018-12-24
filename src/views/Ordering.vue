@@ -96,7 +96,6 @@ export default {
     removeFromOrder:function (item) {
         if( this.chosenIngredients.indexOf(item) !== -1 ){
           this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
-          // this.chosenIngredients.pop(item);
           this.price -= +item.selling_price;
         }
     },
@@ -124,7 +123,7 @@ export default {
                 ingredients: this.chosenIngredients,
                 price: this.price,
                 quantity: 1,
-                stock: 3 //TODO: Remove 3 and get the smallest stock value for all items
+                stock: this.getItemStock() //TODO: Remove 3 and get the smallest stock value for all items
             };
         if(this.chosenIngredients.length===0){
             alert("No item is selected to add to cart!");
@@ -140,7 +139,18 @@ export default {
           this.chosenIngredients = [];
         }
     },
+    getItemStock: function(){
+        var i, item, min_stock;
+        min_stock = Infinity;
+        for (i=0;i<this.chosenIngredients.length;i++){
+            item = this.chosenIngredients[i];
+            if (item.stock < min_stock){
+                min_stock = item.stock;
+            }
 
+        }
+        return min_stock;
+    },
     goToCart: function(){
         location.href = "#/cart";
     },

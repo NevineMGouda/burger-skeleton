@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Ordering from './views/Ordering.vue'
 import Cart from './components/Cart.vue'
+import Home from './components/Home.vue'
 
 Vue.use(Router)
 
@@ -9,6 +10,14 @@ let router = new Router({
   routes: [
     {
       path: '/',
+      meta: {
+          title: 'Kraft Burgers Home Page',
+      },
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/ordering',
       meta: {
         title: 'Kraft Burgers',
       },
