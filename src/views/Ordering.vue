@@ -4,11 +4,9 @@
 
 
     <h1 id="head-line">Crafty Burger AB</h1>
-    
     <!--<img class="example-panel" src="@/assets/exampleImage.jpg">-->
-    
-    <h1>{{ uiLabels.ingredients }}</h1>
 
+    <h1>{{ uiLabels.ingredients }} </h1>
     <div class="ing-grid">
     <Ingredient
       ref="ingredient"
@@ -16,13 +14,13 @@
       v-on:increment="addToOrder(item)"
       v-on:decrement="removeFromOrder(item)"
       :item="item" 
-      :lang="lang"
+      :lang="getLang(uiLabels.language)"
       :key="item.ingredient_id">
     </Ingredient>
     </div>
 
     <h1>{{ uiLabels.order }}</h1>
-    {{ chosenIngredients.map(item => item["ingredient_"+lang]).join(', ') }}
+    {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
     <p v-if="chosenIngredients.length != '0'">Item Price: {{ price }} kr </p>
     <button v-on:click="addToCart()">add to cart</button>
     <button v-on:click="goToCart()">Cart</button>
@@ -154,13 +152,18 @@ export default {
     goToCart: function(){
         location.href = "#/cart";
     },
+    getLang: function(lang){
+        if(lang === "Svenska"){
+            return "en";
+        }
+        else{
+            return "sv";
+        }
+    },
     reloadPage: function(){
         if (localStorage.getItem('reloaded')) {
-            // The page was just reloaded. Clear the value from local storage
-            // so that it will reload the next time this page is visited.
             localStorage.removeItem('reloaded');
         } else {
-            // Set a flag so that we know not to reload the page twice.
             localStorage.setItem('reloaded', '1');
             location.reload();
         }
@@ -200,6 +203,6 @@ export default {
 .ing-grid{
   display: grid;
   grid-gab: 1em;
-  grid-template-columns: repeat(auto-fit, calc(7em + 10px));
+  grid-template-columns: repeat(auto-fit, calc(7em + 1px));
 }
 </style>

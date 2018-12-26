@@ -1,7 +1,7 @@
 <template>
   <div class="ingredient">
     <label>
-      <button v-on:click="decrementCounter"> -</button>
+      <button v-on:click="decrementCounter"> - </button>
       {{ counter }}
       <button v-on:click="incrementCounter(item.stock)"> + </button>
       {{item["ingredient_"+ lang]}}, {{item.selling_price}}:-

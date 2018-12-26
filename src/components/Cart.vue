@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
         <h1> Your Cart items</h1>
         <!--TODO: Fix grid below for the cart!-->
         <!--TODO: Show only the grid when the cart is not empty!-->
