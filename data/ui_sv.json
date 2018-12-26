@@ -15,6 +15,16 @@
   "sideorders" : "Tillbehör",
   "ingredients" : "Ingredienser",
   "ready" : "Klart",
-  "order" : "Min burgare",
+  "myBurger" : "Min Burgare",
+  "cart": "Din Kundvagn",
+  "addtoCart": "Lägg till i Kundvagn",
+  "unitPrice": "Jämförpris",
+  "price": "Pris",
+  "quantity": "Antal",
+  "item": "Nummer",
+  "total": "Totalsumma",
+  "remove": "Ta Bort",
+  "clear": "Ta Bort Alla",
+  "order": "Beställa",
   "language" : "English"
 }

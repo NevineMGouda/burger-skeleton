@@ -19,11 +19,11 @@
     </Ingredient>
     </div>
 
-    <h1>{{ uiLabels.order }}</h1>
+    <h1>{{ uiLabels.myBurger }}</h1>
     {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
-    <p v-if="chosenIngredients.length != '0'">Item Price: {{ price }} kr </p>
-    <button v-on:click="addToCart()">add to cart</button>
-    <button v-on:click="goToCart()">Cart</button>
+    <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
+    <button v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
+    <button v-on:click="goToCart()"> {{uiLabels.cart}} </button>
     <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
 
     <h1>{{ uiLabels.ordersInQueue }}</h1>
