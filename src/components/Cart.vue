@@ -22,7 +22,7 @@
                 <button v-on:click="incrementQuantity(key)"> + </button>
             </div>
             <div>{{(order.order.price * order.order.quantity)}}</div>
-            <button v-on:click="deleteItem(key)">Delete</button>
+            <button v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
         </div>
         <br>
         <div v-if="totalPrice != '0'">
@@ -99,7 +99,7 @@
         },
         methods:{
             placeOrder: function () {
-                if(this.totalPrice>0) {
+                if(Object.keys(this.orderToCart).length > 0) {
                     this.$store.state.socket.emit('order', {order: this.orderToCart});
                     this.orderToCart = {};
                     this.totalPrice = 0;
