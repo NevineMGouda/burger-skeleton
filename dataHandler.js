@@ -75,17 +75,19 @@ Data.prototype.addOrder = function (order) {
   this.orders[orderId].status = "not-started";
   var transactions = this.data[transactionsDataName],
   //find out the currently highest transaction id
-  transId =  transactions[transactions.length - 1].transaction_id,i, k;
-  var j;
-  for (j = 0; j < order.order.length; j += 1) {
-      i = order.order[j].order.ingredients;
-      for (k = 0; k < i.length; k += 1) {
-          transId += 1;
-          transactions.push({transaction_id: transId,
-              ingredient_id: i[k].ingredient_id,
-              change: - 1});
+  transId =  transactions[transactions.length - 1].transaction_id;
+  var i, j, k;
+  for (i in order.order) {
+      if (order.order.hasOwnProperty(i)) {
+          j = order.order[i].order.ingredients;
+          for (k = 0; k < j.length; k += 1) {
+              transId += 1;
+              transactions.push({transaction_id: transId,
+                  ingredient_id: j[k].ingredient_id,
+                  change: - 1});
+          }
       }
-  }
+    }
   return orderId;
 };
 
