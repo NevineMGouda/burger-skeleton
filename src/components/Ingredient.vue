@@ -5,6 +5,7 @@
       {{ counter }}
       <button v-on:click="incrementCounter(item.stock)"> + </button>
       {{item["ingredient_"+ lang]}}, {{item.selling_price}}:-
+      <img :src="require('../assets/'+ item.image)" width="100" height="50%">
     </label>
   </div>
 </template>
