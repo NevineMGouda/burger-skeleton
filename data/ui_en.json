@@ -15,6 +15,16 @@
   "sideorders" : "Side orders",
   "ingredients" : "Ingredients",
   "ready" : "Done",
-  "order" : "My burger",
+  "myBurger" : "My burger",
+  "cart": "My Cart",
+  "addtoCart": "Add To Cart",
+  "unitPrice": "Unit Price",
+  "price": "Price",
+  "quantity": "Quantity",
+  "item": "Item",
+  "total": "Total",
+  "remove": "Remove Item",
+  "clear": "Clear All",
+  "order": "Order",
   "language" : "Svenska"
 }
