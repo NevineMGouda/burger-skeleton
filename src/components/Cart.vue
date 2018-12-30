@@ -1,15 +1,16 @@
 <template>
     <div>
+        <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
         <h1> Your Cart items</h1>
         <!--TODO: Fix grid below for the cart!-->
         <!--TODO: Show only the grid when the cart is not empty!-->
         <div class="ing-grid">
-            <div>Item</div>
-            <div>Ingredients</div>
-            <div>Unit Price</div>
-            <div>Quantity</div>
-            <div>Total</div>
-            <div>Delete Item</div>
+            <div> {{uiLabels.item}} </div>
+            <div> {{uiLabels.ingredients}} </div>
+            <div> {{uiLabels.unitPrice}} </div>
+            <div> {{uiLabels.quantity}} </div>
+            <div> {{uiLabels.total}} </div>
+            <div> {{uiLabels.remove}} </div>
         </div>
         <div v-for="(order,key) in orderToCart" :key="key" class="ing-grid">
             <div>{{key}}</div>
@@ -21,15 +22,15 @@
                 <button v-on:click="incrementQuantity(key)"> + </button>
             </div>
             <div>{{(order.order.price * order.order.quantity)}}</div>
-            <button v-on:click="deleteItem(key)">Delete</button>
+            <button v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
         </div>
         <br>
         <div v-if="totalPrice != '0'">
-            Total Price: {{totalPrice}} SEK
+            {{uiLabels.price}}: {{totalPrice}} SEK
         </div>
         <div>
-            <button v-on:click="clearCart()">Clear Cart</button>
-            <button v-on:click="placeOrder()">Order</button>
+            <button v-on:click="clearCart()"> {{uiLabels.clear}} </button>
+            <button v-on:click="placeOrder()"> {{uiLabels.order}} </button>
             <h1 v-if="orderNumber !== ''">  {{"your order number is: " + orderNumber}}</h1>
             <h1>{{ uiLabels.ordersInQueue }}</h1>
             <div v-for="(order, orderkey) in orders"
@@ -98,7 +99,7 @@
         },
         methods:{
             placeOrder: function () {
-                if(this.totalPrice>0) {
+                if(Object.keys(this.orderToCart).length > 0) {
                     this.$store.state.socket.emit('order', {order: this.orderToCart});
                     this.orderToCart = {};
                     this.totalPrice = 0;
