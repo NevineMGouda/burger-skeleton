@@ -1,12 +1,10 @@
 <template>
   <div class="ingredient">
-    <label class="inggrid">
+    <label>
       <button v-on:click="decrementCounter"> -</button>
       {{ counter }}
-      <button v-on:click="incrementCounter(item.stock)"> + </button><br>
+      <button v-on:click="incrementCounter(item.stock)"> + </button>
       {{item["ingredient_"+ lang]}}, {{item.selling_price}}:-
-      <!--<img :src=item.image width="100" height="100" >-->
-      <img :src="require('../assets/'+item.image)" width="100" height="50%"  >
     </label>
   </div>
 </template>
@@ -19,7 +17,7 @@ export default {
   },
     data: function () {
     return {
-      counter: 0,
+      counter: 0
     };
   },
   methods: {
@@ -57,15 +55,5 @@ export default {
 }
 </script>
 <style scoped>
-  /*.ingredient{*/
-    /*display: grid;*/
-    /*!*grid-gab: 1em;*!*/
-    /*grid-template-columns: repeat(auto-fit, calc(7em + 10px));*/
-  /*}*/
-
-  /*.inggrid>img{*/
-    /*width:100%;*/
-    /*max-height:100%;*/
-    /*object-fit: cover;*/
-  /*}*/
+  
 </style>
