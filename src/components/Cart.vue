@@ -1,10 +1,14 @@
 <template>
-    <div>
-        <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-        <h1> Your Cart items</h1>
+    <div id="cart" class="container">
+        <button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+        <br>
+        <br>
+        <h1> {{uiLabels.yourCart}} </h1>
+        <div v-if="Object.keys(orderToCart).length === 0">
+            The Cart is Empty!
+        </div>
         <!--TODO: Fix grid below for the cart!-->
-        <!--TODO: Show only the grid when the cart is not empty!-->
-        <div class="ing-grid">
+        <div class="ing-grid" v-if="Object.keys(orderToCart).length !== 0">
             <div> {{uiLabels.item}} </div>
             <div> {{uiLabels.ingredients}} </div>
             <div> {{uiLabels.unitPrice}} </div>
@@ -17,20 +21,24 @@
             <div>{{order.order.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}</div>
             <div>{{order.order.price}}</div>
             <div>
-                <button v-on:click="decrementQuantity(key)"> - </button>
+                <button class="btn-warning btn-xs" v-on:click="decrementQuantity(key)"> - </button>
                 {{order.order.quantity}}
-                <button v-on:click="incrementQuantity(key)"> + </button>
+                <button class="btn-warning btn-xs" v-on:click="incrementQuantity(key)"> + </button>
             </div>
             <div>{{(order.order.price * order.order.quantity)}}</div>
-            <button v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
+            <button class="btn-warning btn-xs" v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
         </div>
         <br>
         <div v-if="totalPrice != '0'">
             {{uiLabels.price}}: {{totalPrice}} SEK
         </div>
         <div>
-            <button v-on:click="clearCart()"> {{uiLabels.clear}} </button>
-            <button v-on:click="placeOrder()"> {{uiLabels.order}} </button>
+            <button class="btn btn-dark btn-sm" v-on:click="clearCart()"> {{uiLabels.clear}} </button>
+            <button class="btn btn-dark btn-sm" v-on:click="placeOrder()"> {{uiLabels.order}} </button>
+            <br>
+            <br>
+            <br>
+            <br>
             <h1 v-if="orderNumber !== ''">  {{"your order number is: " + orderNumber}}</h1>
             <h1>{{ uiLabels.ordersInQueue }}</h1>
             <div v-for="(order, orderkey) in orders"
@@ -161,6 +169,12 @@
 </script>
 
 <style scoped>
+
+#cart {
+    margin:auto;
+    padding-top: 1px;
+    max-width: 100%;
+}
 .ing-grid{
     display: grid;
     grid-gap: 10px;

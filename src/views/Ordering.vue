@@ -1,32 +1,29 @@
 <template onload="document.refresh();">
   <div id="ordering" class="container">
-    <button v-on:click="switchLang()">{{ uiLabels.language }}</button>
-
-
-    <h1 id="head-line">Crafty Burger AB</h1>
-    <!--<img class="example-panel" src="@/assets/exampleImage.jpg">-->
+    <div>
+      <button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>
+    </div>
 
     <h1>{{ uiLabels.ingredients }} </h1>
     <div class="ing-grid">
-    <Ingredient
-      ref="ingredient"
-      v-for="item in ingredients"
-      v-on:increment="addToOrder(item)"
-      v-on:decrement="removeFromOrder(item)"
-      :item="item" 
-      :lang="getLang(uiLabels.language)"
-      :key="item.ingredient_id">
-    </Ingredient>
+      <Ingredient
+              ref="ingredient"
+              v-for="item in ingredients"
+              v-on:increment="addToOrder(item)"
+              v-on:decrement="removeFromOrder(item)"
+              :item="item"
+              :lang="getLang(uiLabels.language)"
+              :key="item.ingredient_id">
+      </Ingredient>
     </div>
 
     <h1>{{ uiLabels.myBurger }}</h1>
     {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
     <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
-    <button v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
-    <button v-on:click="goToCart()"> {{uiLabels.cart}} </button>
+    <button class="btn btn-dark btn-sm" v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
+    <button class="btn btn-dark btn-sm" v-on:click="goToCart()" > {{uiLabels.cart}} </button>
     <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
-
-    <h1>{{ uiLabels.ordersInQueue }}</h1>
+    <h1 v-if="orders.length !== '0'">{{ uiLabels.ordersInQueue }}</h1>
     <div v-for="(order, orderkey) in orders"
          v-if="order.status !== 'done'" :key="orderkey">
       <OrderItem
@@ -52,7 +49,7 @@ import OrderItem from '@/components/OrderItem.vue'
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 
 
-/* instead of defining a Vue instance, export default allows the only 
+/* instead of defining a Vue instance, export default allows the only
 necessary Vue instance (found in main.js) to import your data and methods */
 
 export default {
@@ -177,7 +174,8 @@ export default {
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 #ordering {
   margin:auto;
-  max-width: 40em;
+  padding-top: 50px;
+  max-width: 100%;
 }
 
 .example-panel {
@@ -189,11 +187,13 @@ export default {
 .ingredient {
   border: 1px solid #ccd;
   padding: 5px;
-  width: 7em;
-  height: 7em;
-  background-image: url('~@/assets/exampleImage.jpg');
+  width: 14em;
+  height: 14em;
+  /*background-image: url('~@/assets/exampleImage.jpg');*/
   color: white;
+  text-align: center;
 }
+
 
 #head-line {
 	padding: 0px 150px 40px;
@@ -203,6 +203,6 @@ export default {
 .ing-grid{
   display: grid;
   grid-gab: 1em;
-  grid-template-columns: repeat(auto-fit, calc(7em + 1px));
+  grid-template-columns: repeat(auto-fit, calc(14em + 1px));
 }
 </style>
