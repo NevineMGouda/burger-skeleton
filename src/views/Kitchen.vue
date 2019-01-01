@@ -1,5 +1,6 @@
 <template>
 <div id="orders">
+
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
     <OrderItemToPrepare
@@ -49,9 +50,18 @@ export default {
       price: 0
     }
   },
+    created: function(){
+      this.hideNav();
+    },
   methods: {
     markDone: function (orderid) {
       this.$store.state.socket.emit("orderDone", orderid);
+    },
+    hideNav: function(){
+        var x = document.getElementById("menu1-7");
+        var y = document.getElementById("footer1-q");
+        x.style.display = "none";
+        y.style.display = "none";
     }
   }
 }
