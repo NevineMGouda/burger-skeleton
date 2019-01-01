@@ -1,41 +1,48 @@
 <template onload="document.refresh();">
-  <div id="ordering" class="container">
-    <div>
-      <button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>
-    </div>
+  <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="mbr-white col-md-12">
+          <div id="ordering" class="container">
+            <!--<div>-->
+              <!--<button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>-->
+            <!--</div>-->
+            <h1>{{ uiLabels.ingredients }}</h1>
+            <div class="ing-grid">
+              <Ingredient
+                      ref="ingredient"
+                      v-for="item in ingredients"
+                      v-on:increment="addToOrder(item)"
+                      v-on:decrement="removeFromOrder(item)"
+                      :item="item"
+                      :lang="getLang(uiLabels.language)"
+                      :key="item.ingredient_id">
+              </Ingredient>
+            </div>
 
-    <h1>{{ uiLabels.ingredients }} </h1>
-    <div class="ing-grid">
-      <Ingredient
-              ref="ingredient"
-              v-for="item in ingredients"
-              v-on:increment="addToOrder(item)"
-              v-on:decrement="removeFromOrder(item)"
-              :item="item"
-              :lang="getLang(uiLabels.language)"
-              :key="item.ingredient_id">
-      </Ingredient>
+            <h1>{{ uiLabels.myBurger }}</h1>
+            {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
+            <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
+            <button class="btn btn-dark btn-sm" v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
+            <button class="btn btn-dark btn-sm" v-on:click="goToCart()" > {{uiLabels.cart}} </button>
+            <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
+            <h1 v-if="orders.length !== '0'">{{ uiLabels.ordersInQueue }}</h1>
+            <div v-for="(order, orderkey) in orders"
+                 v-if="order.status !== 'done'" :key="orderkey">
+              <OrderItem
+                      v-for="(item, key) in order.items"
+                      :order-id="orderkey"
+                      :order="item"
+                      :lang="lang"
+                      :ui-labels="uiLabels"
+                      :key="key">
+              </OrderItem>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h1>{{ uiLabels.myBurger }}</h1>
-    {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
-    <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
-    <button class="btn btn-dark btn-sm" v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
-    <button class="btn btn-dark btn-sm" v-on:click="goToCart()" > {{uiLabels.cart}} </button>
-    <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
-    <h1 v-if="orders.length !== '0'">{{ uiLabels.ordersInQueue }}</h1>
-    <div v-for="(order, orderkey) in orders"
-         v-if="order.status !== 'done'" :key="orderkey">
-      <OrderItem
-              v-for="(item, key) in order.items"
-              :order-id="orderkey"
-              :order="item"
-              :lang="lang"
-              :ui-labels="uiLabels"
-              :key="key">
-      </OrderItem>
-    </div>
-  </div>
+  </section>
 </template>
 <script>
 
@@ -76,6 +83,8 @@ export default {
       this.orderNumber = data;
     }.bind(this));
     this.reloadPage();
+    // this.getMenu();
+
   },
   methods: {
     addToOrder: function (item) {
@@ -157,6 +166,7 @@ export default {
             return "sv";
         }
     },
+
     reloadPage: function(){
         if (localStorage.getItem('reloaded')) {
             localStorage.removeItem('reloaded');

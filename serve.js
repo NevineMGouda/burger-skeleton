@@ -37,9 +37,9 @@ data.initializeData();
 
 io.on('connection', function (socket) {
   // Send list of orders and text labels when a client connects
-    socket.on('pageLoaded', function(){
+    socket.on('pageLoaded', function(lang){
         socket.emit('initialize', { orders: data.getAllOrders(),
-            uiLabels: data.getUILabels(),
+            uiLabels: data.getUILabels(lang),
             ingredients: data.getIngredients() });
     });
 
@@ -55,7 +55,9 @@ io.on('connection', function (socket) {
   ////////////////////////////
     // When someone add to cart something
     socket.on('addItem', function (cartItem) {
+        console.log("In ADDITEM serve.js");
         // // send updated info to all connected clients, note the use of io instead of socket
+        socket.emit('addItem2', cartItem);
         io.emit('addItem2', cartItem);
     });
   ////////////////////////////

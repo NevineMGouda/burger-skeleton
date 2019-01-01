@@ -1,59 +1,78 @@
 <template>
-    <div id="cart" class="container">
-        <button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>
-        <br>
-        <br>
-        <h1> {{uiLabels.yourCart}} </h1>
-        <div v-if="Object.keys(orderToCart).length === 0">
-            The Cart is Empty!
-        </div>
-        <!--TODO: Fix grid below for the cart!-->
-        <div class="ing-grid" v-if="Object.keys(orderToCart).length !== 0">
-            <div> {{uiLabels.item}} </div>
-            <div> {{uiLabels.ingredients}} </div>
-            <div> {{uiLabels.unitPrice}} </div>
-            <div> {{uiLabels.quantity}} </div>
-            <div> {{uiLabels.total}} </div>
-            <div> {{uiLabels.remove}} </div>
-        </div>
-        <div v-for="(order,key) in orderToCart" :key="key" class="ing-grid">
-            <div>{{key}}</div>
-            <div>{{order.order.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}</div>
-            <div>{{order.order.price}}</div>
-            <div>
-                <button class="btn-warning btn-xs" v-on:click="decrementQuantity(key)"> - </button>
-                {{order.order.quantity}}
-                <button class="btn-warning btn-xs" v-on:click="incrementQuantity(key)"> + </button>
+    <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="mbr-white col-md-12">
+                    <div id="cart" class="container">
+                        <!--<div class="button">-->
+                            <!--<button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>-->
+                        <!--</div>-->
+                        <h1> {{uiLabels.yourCart}} </h1>
+                        <br>
+                        <div v-if="Object.keys(orderToCart).length === 0">
+                            {{uiLabels.emptyCart}}
+                        </div>
+                        <div class="container" id="container-table">
+                            <div class="row" id="grid-header" v-if="Object.keys(orderToCart).length !== 0">
+                                <div class="col align-center"> {{uiLabels.item}} </div>
+                                <div class="col align-center"> {{uiLabels.ingredients}} </div>
+                                <div class="col align-center"> {{uiLabels.unitPrice}} </div>
+                                <div class="col align-center"> {{uiLabels.quantity}} </div>
+                                <div class="col align-center"> {{uiLabels.total}} </div>
+                                <div class="col align-center"> {{uiLabels.remove}} </div>
+                            </div>
+                            <div v-for="(order,key) in orderToCart" :key="key" class="row grid-row">
+                                <div class="col align-center grid-col">{{key}}</div>
+                                <div class="col align-center">{{order.order.ingredients.map(item=>item["ingredient_"+ lang]).join(", ") }}</div>
+                                <div class="col align-center">{{order.order.price}}</div>
+                                <div class="col align-center">
+                                    <button class="btn-warning btn-xs" v-on:click="decrementQuantity(key)"> - </button>
+                                    {{order.order.quantity}}
+                                    <button class="btn-warning btn-xs" v-on:click="incrementQuantity(key)"> + </button>
+                                </div>
+                                <div class="col align-center">{{(order.order.price * order.order.quantity)}}</div>
+                                <div class="col align-center">
+                                    <button class="btn-warning btn-xs" v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div v-if="totalPrice != '0'">
+                            {{uiLabels.price}}: {{totalPrice}} SEK
+                        </div>
+                        <div>
+                            <button class="btn btn-dark btn-sm" v-on:click="clearCart()"> {{uiLabels.clear}} </button>
+                            <button class="btn btn-dark btn-sm" v-on:click="placeOrder()"> {{uiLabels.order}} </button>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <h1 v-if="orderNumber !== ''">  {{"your order number is: " + orderNumber}}</h1>
+                            <h1>{{ uiLabels.ordersInQueue }}</h1>
+                            <div v-for="(order, orderkey) in orders"
+                                 v-if="order.status !== 'done'" :key="orderkey">
+                                <OrderItem
+                                        v-for="(item, key) in order.items"
+                                        :order-id="orderkey"
+                                        :order="item"
+                                        :lang="lang"
+                                        :ui-labels="uiLabels"
+                                        :key="key">
+                                </OrderItem>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>{{(order.order.price * order.order.quantity)}}</div>
-            <button class="btn-warning btn-xs" v-on:click="deleteItem(key)">{{uiLabels.remove}}</button>
         </div>
-        <br>
-        <div v-if="totalPrice != '0'">
-            {{uiLabels.price}}: {{totalPrice}} SEK
+        <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+            <a href="#footer1-q">
+                <i class="mbri-down mbr-iconfont"></i>
+            </a>
         </div>
-        <div>
-            <button class="btn btn-dark btn-sm" v-on:click="clearCart()"> {{uiLabels.clear}} </button>
-            <button class="btn btn-dark btn-sm" v-on:click="placeOrder()"> {{uiLabels.order}} </button>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h1 v-if="orderNumber !== ''">  {{"your order number is: " + orderNumber}}</h1>
-            <h1>{{ uiLabels.ordersInQueue }}</h1>
-            <div v-for="(order, orderkey) in orders"
-                 v-if="order.status !== 'done'" :key="orderkey">
-                <OrderItem
-                        v-for="(item, key) in order.items"
-                        :order-id="orderkey"
-                        :order="item"
-                        :lang="lang"
-                        :ui-labels="uiLabels"
-                        :key="key">
-                </OrderItem>
-            </div>
-        </div>
-    </div>
+    </section>
+
 </template>
 
 <script>
@@ -78,7 +97,9 @@
         },
 
         created: function (){
+            console.log("IN CREATED!");
             this.$store.state.socket.on('addItem2', function (data) {
+                console.log("IN addItem2");
                 var itemId =this.getOrderItemNumber();
                 this.totalPrice += data.order.price;
                 this.orderToCart[itemId]=data;
@@ -88,6 +109,7 @@
             }.bind(this));
         },
         mounted() {
+            console.log("IN mounted");
             // Get stored cart when mounting, refreshing. (persisting the data when the page is refreshed)
             if (localStorage.getItem('orderToCart')) {
                 this.orderToCart = JSON.parse(localStorage.getItem('orderToCart'));
@@ -174,6 +196,27 @@
     margin:auto;
     padding-top: 1px;
     max-width: 100%;
+}
+#grid-header{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    border: solid black;
+    border-width: 4px 4px 2px 4px;
+    padding: 4px;
+}
+#container-table{
+    /*border: solid 1px black;*/
+}
+.grid-row{
+    border: solid 2px black;
+    /*padding-top: 10px;*/
+    /*padding-bottom: 10px;*/
+    padding: 30px 0;
+    align-content: center;
+}
+.button{
+    padding-top: 40px;
 }
 .ing-grid{
     display: grid;
