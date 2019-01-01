@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
             uiLabels: data.getUILabels(lang),
             ingredients: data.getIngredients() });
     });
-
+    socket.emit('kitchenLabels', {uiLabels: data.getUILabels()});
   // When someone orders something
   socket.on('order', function (order) {
     var orderIdAndName = data.addOrder(order);

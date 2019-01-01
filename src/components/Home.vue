@@ -30,9 +30,10 @@
 
 <script>
     import sharedVueStuff from '@/components/sharedVueStuff.js'
+    import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'
     export default {
         name: "Home",
-        mixins: [sharedVueStuff],
+        mixins: [sharedVueStuff, sharedVueStuffClient],
         components: {
         },
         data: function () {

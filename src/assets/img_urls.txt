@@ -16,7 +16,7 @@
 16		https://wonderopolis.org/wp-content/uploads/2016/04/dreamstime_xl_48272966_(Custom).jpg
 17		https://www.greenprophet.com/wp-content/uploads/2013/09/cilantro.jpg
 18		https://thebusybaker.ca/wp-content/uploads/2018/05/best-ever-creamy-coleslaw-fbig3BEST.jpg
-19		https://static.smuckersrms.com/PhotoImage.ashx?recipeid=517&w=600&h=600		
+19		https://static.smuckersrms.com/PhotoImage.ashx?recipeid=517&w=600&h=600
 20		https://www.bhg.com.au/media/6771/friedeggnouf02-1.jpg
 21		https://edge.bonnieplants.com/www/uploads/20180920003952/mammoth-jalapeno-hot-pepper.jpg
 22		https://edge.bonnieplants.com/www/uploads/20180920003952/mammoth-jalapeno-hot-pepper.jpg
@@ -37,7 +37,7 @@
 37		https://www.seriouseats.com/recipes/images/2016/07/20130821-263816-korean-flavored-bbq-sauce-1500x1125.jpg
 38		https://keeprecipes.com/sites/keeprecipes/files/imagecache/recipe_large/189844_1483639763_0.jpg
 39		http://thescienceofeating.com/wp-content/uploads/2012/08/Book-Creamy-Country-Dijon-Sauce.jpg
-40		
+40
 41
 42		https://www.inspiredtaste.net/wp-content/uploads/2016/06/Easy-Hummus-Recipe-Video-1200.jpg
 43		https://images-na.ssl-images-amazon.com/images/I/71OIr%2Bn5oUL._SY355_.jpg

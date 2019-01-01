@@ -54,6 +54,7 @@ import OrderItem from '@/components/OrderItem.vue'
 
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
+import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'
 
 
 /* instead of defining a Vue instance, export default allows the only
@@ -65,7 +66,7 @@ export default {
     Ingredient,
     OrderItem,
   },
-  mixins: [sharedVueStuff], // include stuff that is used in both
+  mixins: [sharedVueStuff, sharedVueStuffClient], // include stuff that is used in both
                         // the ordering system and the kitchen
   data: function() { //Not that data is a function!
     return {

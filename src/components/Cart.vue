@@ -79,9 +79,11 @@
     import OrderItem from '@/components/OrderItem.vue'
 
     import sharedVueStuff from '@/components/sharedVueStuff.js'
+    import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'
+
     export default {
         name: "Cart",
-        mixins: [sharedVueStuff],
+        mixins: [sharedVueStuff, sharedVueStuffClient],
         components: {
             OrderItem,
         },
@@ -97,9 +99,7 @@
         },
 
         created: function (){
-            console.log("IN CREATED!");
             this.$store.state.socket.on('addItem2', function (data) {
-                console.log("IN addItem2");
                 var itemId =this.getOrderItemNumber();
                 this.totalPrice += data.order.price;
                 this.orderToCart[itemId]=data;
@@ -109,7 +109,6 @@
             }.bind(this));
         },
         mounted() {
-            console.log("IN mounted");
             // Get stored cart when mounting, refreshing. (persisting the data when the page is refreshed)
             if (localStorage.getItem('orderToCart')) {
                 this.orderToCart = JSON.parse(localStorage.getItem('orderToCart'));

@@ -1,6 +1,5 @@
 <template>
 <div id="orders">
-
   <h1>{{ uiLabels.ordersInQueue }}</h1>
   <div>
     <OrderItemToPrepare
@@ -47,11 +46,16 @@ export default {
   data: function(){
     return {
       chosenIngredients: [],
-      price: 0
+      price: 0,
+      uiLabels: {},
+        lang: 'en'
     }
   },
     created: function(){
       this.hideNav();
+        this.$store.state.socket.on('kitchenLabels', function (data) {
+            this.uiLabels = data.uiLabels;
+        }.bind(this));
     },
   methods: {
     markDone: function (orderid) {

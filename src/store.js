@@ -12,7 +12,8 @@ export default new Vuex.Store({
   },
   getters: {
     getSocket: state => state.socket,
-    getLang: state => state.lang
+    getLang: state => state.lang,
+    getUiLabels: state => state.uiLabels
   },
   mutations: { //manipulating data in the store
     setUiLabels:function(store, labels){
