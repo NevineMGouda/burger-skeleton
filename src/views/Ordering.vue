@@ -1,4 +1,28 @@
 <template onload="document.refresh();">
+  <div>
+  <section class="header5 cid-rdokJKPrV4 mbr-fullscreen mbr-parallax-background" id="header5-m">
+
+
+
+    <div class="mbr-overlay" style="opacity: 0.6; background-color: rgb(0, 0, 0);">
+    </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="mbr-white col-md-10">
+          <h1 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">Customize Your Own Order</h1>
+          <p class="mbr-text align-center display-5 pb-3 mbr-fonts-style">
+            Choose Your Ingredients Below</p>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+      <a href="#header5-r">
+        <i class="mbri-down mbr-iconfont"></i>
+      </a>
+    </div>
+  </section>
   <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
     <div class="container">
       <div class="row justify-content-center">
@@ -43,6 +67,7 @@
       </div>
     </div>
   </section>
+  </div>
 </template>
 <script>
 
@@ -84,6 +109,7 @@ export default {
 
   },
   computed: function(){
+    var i;
     for (i = 0; i < this.$refs.ingredient.length; i += 1) {
       this.$refs.ingredient[i].resetCounter();
     }
