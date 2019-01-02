@@ -42,7 +42,9 @@ io.on('connection', function (socket) {
             uiLabels: data.getUILabels(lang),
             ingredients: data.getIngredients() });
     });
-    socket.emit('kitchenLabels', {uiLabels: data.getUILabels()});
+    socket.on('kitchenpageLoaded', function(lang){
+    socket.emit('kitchenLabels', {uiLabels: data.getUILabels(lang)});
+    });
   // When someone orders something
   socket.on('order', function (order) {
     var orderIdAndName = data.addOrder(order);
@@ -64,6 +66,11 @@ io.on('connection', function (socket) {
   socket.on('switchLang', function (lang) {
   socket.emit('switchLang', data.getUILabels(lang));
   io.emit('switchLang', data.getUILabels(lang));
+  });
+  socket.on('kitchenSwitchLang', function (lang) {
+      console.log("In kitchenSwitchLang");
+      socket.emit('kitchenSwitchLang', data.getUILabels(lang));
+      io.emit('kitchenSwitchLang', data.getUILabels(lang));
   });
   // when order is marked as done, send updated queue to all connected clients
   socket.on('orderDone', function (orderId) {
