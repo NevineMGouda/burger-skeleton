@@ -1,5 +1,4 @@
 'use strict';
-// import { EventBus } from './event-bus.js';
 
 // Stuff that is used both in the ordering system and in the kitchen
 var sharedVueStuffClient = {
