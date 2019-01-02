@@ -1,17 +1,22 @@
 <template>
   <!-- Note in this component that it is using another component -->
-<div>
+<div class ="row grid-row">
   <OrderItem
     v-for="(item, key) in order"
     :ui-labels="uiLabels"
     :lang="lang"
     :key="key"
     :order-id="orderId"
-    :order="item">
+    :eat-in="eatIn"
+    :order="item" class="col align-center">
+
   </OrderItem>
-  <button v-on:click="orderDone">
-    {{uiLabels.ready}}
-  </button>
+  <div class="col-md-3 align-center">
+    <button v-on:click="orderDone">
+      {{uiLabels.ready}}
+    </button>
+  </div>
+
 </div>
 </template>
 <script>
@@ -24,7 +29,8 @@ export default {
     uiLabels: Object,
     order: Object,
     orderId: String,
-    lang: String
+    lang: String,
+    eatIn: Number
   },
   methods: {
     orderDone: function () {
