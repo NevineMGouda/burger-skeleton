@@ -73,6 +73,7 @@ Data.prototype.addOrder = function (order) {
   this.orders[orderId].items = order.order;
   this.orders[orderId].orderId = orderId;
   this.orders[orderId].status = "not-started";
+  this.orders[orderId].eatIn = order.eatIn;
   var transactions = this.data[transactionsDataName],
   //find out the currently highest transaction id
   transId =  transactions[transactions.length - 1].transaction_id;
