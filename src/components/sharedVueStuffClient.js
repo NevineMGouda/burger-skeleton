@@ -40,9 +40,6 @@ var sharedVueStuffClient = {
       this.getMenu();
     }.bind(this));
     this.getMenu();
-      this.$store.state.socket.on('addItem2', function (data) {
-          this.$store.state.socket.emit('addItem2', data);
-      }.bind(this));
 
   },
   mounted() {

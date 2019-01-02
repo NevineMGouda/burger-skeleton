@@ -1,4 +1,4 @@
-<template onload="document.refresh();">
+<template>
   <div>
   <section class="header5 cid-rdokJKPrV4 mbr-fullscreen mbr-parallax-background" id="header5-m">
 
@@ -28,9 +28,6 @@
       <div class="row justify-content-center">
         <div class="mbr-white col-md-12">
           <div id="ordering" class="container">
-            <!--<div>-->
-              <!--<button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>-->
-            <!--</div>-->
             <h1>{{ uiLabels.ingredients }}</h1>
             <div class="ing-grid">
               <Ingredient
@@ -105,7 +102,6 @@ export default {
     this.$store.state.socket.on('orderNumber', function (data) {
       this.orderNumber = data;
     }.bind(this));
-    this.reloadPage();
 
   },
   computed: function(){
@@ -155,14 +151,13 @@ export default {
                 ingredients: this.chosenIngredients,
                 price: this.price,
                 quantity: 1,
-                stock: this.getItemStock() //TODO: Remove 3 and get the smallest stock value for all items
+                stock: this.getItemStock()
             };
         if(this.chosenIngredients.length===0){
             alert("No item is selected to add to cart!");
         }
         else{
           this.newOrder({order: order});
-          this.$store.state.socket.emit('addItem', {order: order});
           //set all counters to 0. Notice the use of $refs
           for (i = 0; i < this.$refs.ingredient.length; i += 1) {
               this.$refs.ingredient[i].resetCounter();
@@ -192,15 +187,6 @@ export default {
         }
         else{
             return "sv";
-        }
-    },
-
-    reloadPage: function(){
-        if (localStorage.getItem('reloaded')) {
-            localStorage.removeItem('reloaded');
-        } else {
-            localStorage.setItem('reloaded', '1');
-            location.reload();
         }
     }
   }

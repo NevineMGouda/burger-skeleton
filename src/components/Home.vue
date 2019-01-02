@@ -1,9 +1,5 @@
 <template>
     <div>
-        <!--<button v-on:click="switchLang()">{{ uiLabels.language }}</button>-->
-        <!--<h2 id="head-line">Crafty Burger AB</h2>-->
-        <!--<button v-on:click="goToOrder()">Order</button>-->
-        <!--<button v-on:click="goToCart()">Cart</button>-->
         <section class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background" id="header2-1">
 
             <div class="container align-center">
@@ -43,27 +39,12 @@
         },
 
         created: function (){
-            this.reloadPage();
 
         },
         mounted() {
 
         },
         methods:{
-            goToOrder: function(){
-                location.href = "#/ordering";
-            },
-            goToCart: function(){
-                location.href = "#/cart";
-            },
-            reloadPage: function(){
-                if (localStorage.getItem('reloaded')) {
-                    localStorage.removeItem('reloaded');
-                } else {
-                    localStorage.setItem('reloaded', '1');
-                    location.reload();
-                }
-            }
         },
 
     }

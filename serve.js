@@ -53,15 +53,6 @@ io.on('connection', function (socket) {
     io.emit('currentQueue', { orders: data.getAllOrders(),
                           ingredients: data.getIngredients() });
   });
-
-  ////////////////////////////
-    // When someone add to cart something
-    socket.on('addItem', function (cartItem) {
-        // // send updated info to all connected clients, note the use of io instead of socket
-        socket.emit('addItem2', cartItem);
-        io.emit('addItem2', cartItem);
-    });
-  ////////////////////////////
   // send UI labels in the chosen language
   socket.on('switchLang', function (lang) {
   socket.emit('switchLang', data.getUILabels(lang));
