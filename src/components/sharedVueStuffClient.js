@@ -1,7 +1,13 @@
 'use strict';
+// import { EventBus } from './event-bus.js';
 
 // Stuff that is used both in the ordering system and in the kitchen
 var sharedVueStuffClient = {
+    data: function () {
+        return {
+            newOrderItem:{}
+        }
+    },
   computed: {
     uiLabels: {get: function(){
             return this.$store.state.uiLabels;
@@ -47,6 +53,9 @@ var sharedVueStuffClient = {
       if (localStorage.getItem('uiLabels')) {
           this.uiLabels = JSON.parse(localStorage.getItem('uiLabels'));
       }
+      if (localStorage.getItem('newOrderItem')) {
+          this.newOrderItem = JSON.parse(localStorage.getItem('newOrderItem'));
+      }
       this.getMenu();
   },
   watch: {
@@ -59,6 +68,12 @@ var sharedVueStuffClient = {
       uiLabels: {
           handler() {
               localStorage.setItem('uiLabels', JSON.stringify(this.uiLabels));
+          },
+      },
+      newOrderItem:{
+          handler() {
+              localStorage.setItem('newOrderItem', JSON.stringify(this.newOrderItem));
+
           },
       }
 
@@ -73,7 +88,10 @@ var sharedVueStuffClient = {
       }
       this.$store.state.socket.emit('switchLang', this.lang);
 
-    }
+    },
+    newOrder: function(orderItem){
+        this.newOrderItem = {order: orderItem.order};
+    },
   }
 };
 

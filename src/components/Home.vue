@@ -9,7 +9,7 @@
             <div class="container align-center">
                 <div class="row justify-content-md-center">
                     <div class="mbr-white col-md-10">
-                        <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1"><em><a href="">
+                        <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1"><em><a href="" id ="headline">
                             Crafty Burgers AB</a></em></h1>
 
 
@@ -70,10 +70,8 @@
 </script>
 
 <style scoped>
-    #head-line {
-        padding: 0px 150px 40px;
-        font-size: 24pt;
-        text-align: center;
-    }
-
+#headline{
+    color:black;
+    background: linear-gradient(#149dcc, grey, transparent);
+}
 </style>

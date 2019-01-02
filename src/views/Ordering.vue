@@ -56,7 +56,6 @@ import OrderItem from '@/components/OrderItem.vue'
 import sharedVueStuff from '@/components/sharedVueStuff.js'
 import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'
 
-
 /* instead of defining a Vue instance, export default allows the only
 necessary Vue instance (found in main.js) to import your data and methods */
 
@@ -76,15 +75,12 @@ export default {
       ordertocart:''
     }
   },
-  // props:{
-  //   ordertocart: String
-  // },
+
   created: function () {
     this.$store.state.socket.on('orderNumber', function (data) {
       this.orderNumber = data;
     }.bind(this));
     this.reloadPage();
-    // this.getMenu();
 
   },
   methods: {
@@ -134,7 +130,7 @@ export default {
             alert("No item is selected to add to cart!");
         }
         else{
-          // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
+          this.newOrder({order: order});
           this.$store.state.socket.emit('addItem', {order: order});
           //set all counters to 0. Notice the use of $refs
           for (i = 0; i < this.$refs.ingredient.length; i += 1) {

@@ -7,6 +7,7 @@
                         <!--<div class="button">-->
                             <!--<button class="btn-warning btn-xs" v-on:click="switchLang()">{{ uiLabels.language }}</button>-->
                         <!--</div>-->
+                        <br>
                         <h1> {{uiLabels.yourCart}} </h1>
                         <br>
                         <div v-if="Object.keys(orderToCart).length === 0">
@@ -99,34 +100,50 @@
         },
 
         created: function (){
-            this.$store.state.socket.on('addItem2', function (data) {
-                var itemId =this.getOrderItemNumber();
-                this.totalPrice += data.order.price;
-                this.orderToCart[itemId]=data;
-            }.bind(this));
             this.$store.state.socket.on('orderNumber', function (data) {
                 this.orderNumber = data;
             }.bind(this));
         },
         mounted() {
             // Get stored cart when mounting, refreshing. (persisting the data when the page is refreshed)
+            if (localStorage.getItem('currentItemsCount')) {
+                this.currentItemsCount = Number(localStorage.getItem('currentItemsCount'));
+            }
+            if (localStorage.getItem('totalPrice')) {
+                this.totalPrice = Number(localStorage.getItem('totalPrice'));
+            }
             if (localStorage.getItem('orderToCart')) {
                 this.orderToCart = JSON.parse(localStorage.getItem('orderToCart'));
-                this.totalPrice = Number(localStorage.getItem('totalPrice'));
-                this.currentItemsCount = Number(localStorage.getItem('currentItemsCount'));
+            }
+            if (localStorage.getItem('newOrderItem')) {
+                this.addItem()
             }
         },
         watch: {
             currentItemsCount: {
                 handler() {
-                    // Storre the cart to localStorage(browser's session) when the cart is updated.
-                    localStorage.setItem('orderToCart', JSON.stringify(this.orderToCart));
-                    localStorage.setItem('totalPrice', this.totalPrice);
                     localStorage.setItem('currentItemsCount', this.currentItemsCount);
                 },
             },
+            orderToCart: {
+                handler() {
+                    localStorage.setItem('orderToCart', JSON.stringify(this.orderToCart));
+                },
+            },
+            totalPrice: {
+                handler() {
+                    localStorage.setItem('totalPrice', this.totalPrice);
+                },
+            },
+
         },
         methods:{
+            addItem:function(){
+                var itemId =this.getOrderItemNumber();
+                this.totalPrice += this.newOrderItem.order.price;
+                this.orderToCart[itemId]=this.newOrderItem;
+
+            },
             placeOrder: function () {
                 if(Object.keys(this.orderToCart).length > 0) {
                     this.$store.state.socket.emit('order', {order: this.orderToCart});
