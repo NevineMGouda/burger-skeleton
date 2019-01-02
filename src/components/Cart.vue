@@ -49,7 +49,7 @@
                             <br>
                             <br>
                             <br>
-                            <h1 v-if="orderNumber !== ''">  {{"your order number is: " + orderNumber}}</h1>
+                            <h1 v-if="orderNumber !== ''">  {{uiLabels.yourOrderNumber}}: {{orderNumber}}</h1>
                             <h1>{{ uiLabels.ordersInQueue }}</h1>
                             <div v-for="(order, orderkey) in orders"
                                  v-if="order.status !== 'done'" :key="orderkey">
