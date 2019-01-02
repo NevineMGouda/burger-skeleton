@@ -4,7 +4,7 @@
 var sharedVueStuffClient = {
     data: function () {
         return {
-            newOrderItem:{}
+            newOrderItem: []
         }
     },
   computed: {
@@ -89,7 +89,7 @@ var sharedVueStuffClient = {
 
     },
     newOrder: function(orderItem){
-        this.newOrderItem = {order: orderItem.order};
+        this.newOrderItem.push({order: orderItem.order});
     },
   }
 };

@@ -139,10 +139,13 @@
         },
         methods:{
             addItem:function(){
-                var itemId =this.getOrderItemNumber();
-                this.totalPrice += this.newOrderItem.order.price;
-                this.orderToCart[itemId]=this.newOrderItem;
-
+                var i;
+                for (i in this.newOrderItem){
+                    var itemId = this.getOrderItemNumber();
+                    this.totalPrice += this.newOrderItem[i].order.price;
+                    this.orderToCart[itemId] = this.newOrderItem[i];
+                }
+                this.newOrderItem = [];
             },
             placeOrder: function () {
                 if(Object.keys(this.orderToCart).length > 0) {
