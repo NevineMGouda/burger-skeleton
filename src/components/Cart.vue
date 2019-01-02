@@ -149,7 +149,7 @@
             },
             placeOrder: function () {
                 if(Object.keys(this.orderToCart).length > 0) {
-                    this.$store.state.socket.emit('order', {order: this.orderToCart});
+                    this.$store.state.socket.emit('order', {order: this.orderToCart, eatIn: this.eatIn});
                     this.orderToCart = {};
                     this.totalPrice = 0;
                     localStorage.clear();
@@ -223,9 +223,6 @@
     border: solid black;
     border-width: 4px 4px 2px 4px;
     padding: 4px;
-}
-#container-table{
-    /*border: solid 1px black;*/
 }
 .grid-row{
     border: solid 2px black;

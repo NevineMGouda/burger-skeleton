@@ -4,7 +4,8 @@
 var sharedVueStuffClient = {
     data: function () {
         return {
-            newOrderItem: []
+            newOrderItem: [],
+            eatIn: 1
         }
     },
   computed: {
@@ -55,6 +56,9 @@ var sharedVueStuffClient = {
       if (localStorage.getItem('newOrderItem')) {
           this.newOrderItem = JSON.parse(localStorage.getItem('newOrderItem'));
       }
+      if (localStorage.getItem('eatIn')) {
+          this.eatIn = Number(localStorage.getItem('eatIn'));
+      }
       this.getMenu();
   },
   watch: {
@@ -74,6 +78,13 @@ var sharedVueStuffClient = {
               localStorage.setItem('newOrderItem', JSON.stringify(this.newOrderItem));
 
           },
+      },
+      eatIn:{
+          handler() {
+              console.log("detected eatIn changed");
+              localStorage.setItem('eatIn', JSON.stringify(this.eatIn));
+
+          },
       }
 
 
@@ -91,6 +102,9 @@ var sharedVueStuffClient = {
     newOrder: function(orderItem){
         this.newOrderItem.push({order: orderItem.order});
     },
+    setEatIn: function(value){
+        this.eatIn = value;
+    }
   }
 };
 

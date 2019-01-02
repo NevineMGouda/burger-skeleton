@@ -14,7 +14,7 @@
 
 
                         <div class="mbr-section-btn">
-                            <a class="btn btn-md btn-primary display-4" href="#/ordering">{{uiLabels.placeOrder}}</a>
+                            <a class="btn btn-md btn-primary display-4" href="#/menu">{{uiLabels.placeOrder}}</a>
                         </div>
                     </div>
                 </div>
