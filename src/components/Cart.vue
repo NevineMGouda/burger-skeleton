@@ -77,7 +77,7 @@
 </template>
 
 <script>
-    import OrderItem from '@/components/OrderItem.vue'
+    import OrderItem from '@/components/OrderItem_ordering_cart.vue'
 
     import sharedVueStuff from '@/components/sharedVueStuff.js'
     import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'

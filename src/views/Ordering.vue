@@ -28,7 +28,7 @@
             <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
             <h1 v-if="orders.length !== '0'">{{ uiLabels.ordersInQueue }}</h1>
             <div v-for="(order, orderkey) in orders"
-                 v-if="order.status !== 'done'" :key="orderkey">
+                 v-if="order.status !== 'done'" :key="orderkey" >
               <OrderItem
                       v-for="(item, key) in order.items"
                       :order-id="orderkey"
@@ -50,7 +50,7 @@
 //use for importing will be used in the template above and also below in
 //components
 import Ingredient from '@/components/Ingredient.vue'
-import OrderItem from '@/components/OrderItem.vue'
+import OrderItem from '@/components/OrderItem_ordering_cart.vue'
 
 //import methods and data that are shared between ordering and kitchen views
 import sharedVueStuff from '@/components/sharedVueStuff.js'
@@ -82,6 +82,11 @@ export default {
     }.bind(this));
     this.reloadPage();
 
+  },
+  computed: function(){
+    for (i = 0; i < this.$refs.ingredient.length; i += 1) {
+      this.$refs.ingredient[i].resetCounter();
+    }
   },
   methods: {
     addToOrder: function (item) {
