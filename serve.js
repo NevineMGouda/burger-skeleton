@@ -56,10 +56,8 @@ io.on('connection', function (socket) {
   // send UI labels in the chosen language
   socket.on('switchLang', function (lang) {
   socket.emit('switchLang', data.getUILabels(lang));
-  io.emit('switchLang', data.getUILabels(lang));
   });
   socket.on('kitchenSwitchLang', function (lang) {
-      console.log("In kitchenSwitchLang");
       socket.emit('kitchenSwitchLang', data.getUILabels(lang));
       io.emit('kitchenSwitchLang', data.getUILabels(lang));
   });
