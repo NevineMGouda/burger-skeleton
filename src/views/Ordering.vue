@@ -42,15 +42,13 @@
                       :key="item.ingredient_id">
               </Ingredient>
             </div>
-
-            <h1>{{ uiLabels.myBurger }}</h1>
-            {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
-            <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
-            <button class="btn btn-dark btn-sm" v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
-            <button class="btn btn-dark btn-sm" v-on:click="goToCart()" > {{uiLabels.cart}} </button>
-
           </div>
         </div>
+      </div>
+      <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+        <a href="#tabs1-w">
+          <i class="mbri-down mbr-iconfont"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -156,7 +154,7 @@ export default {
         this.price += +item.selling_price;
       }
       else{
-        alert("Sorry, this ingredient not available in the stock :(");
+        alert(this.uiLabels.maxStock);
       }
     },
 
@@ -193,7 +191,7 @@ export default {
                 stock: this.getItemStock()
             };
         if(this.chosenIngredients.length===0){
-            alert("No item is selected to add to cart!");
+            alert(this.uiLabels.noItem);
         }
         else{
           this.newOrder({order: order});
@@ -203,6 +201,7 @@ export default {
           }
           this.price = 0;
           this.chosenIngredients = [];
+          alert(this.uiLabels.itemSuccess);
         }
     },
     getItemStock: function(){

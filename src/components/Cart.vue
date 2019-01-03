@@ -183,9 +183,10 @@
                     this.orderToCart = {};
                     this.totalPrice = 0;
                     localStorage.clear();
+                    alert(this.uiLabels.thankOrder);
                 }
                 else{
-                    alert("Please add at least 1 item to your Cart!");
+                    alert(this.uiLabels.minCart);
                 }
             },
             getOrderItemNumber: function () {
@@ -207,7 +208,7 @@
                     this.totalPrice += this.orderToCart[itemKey].order.price;
                 }
                 else{
-                    alert("Maximum number of Item "+ itemKey +" reached! Not enough in stock.")
+                    alert(this.uiLabels.maxQuantity)
                 }
             },
             decrementQuantity: function(itemKey){
@@ -225,7 +226,7 @@
             },
 
             clearCart: function () {
-                if (confirm("Are you sure you want to clear your cart?")){
+                if (confirm(this.uiLabels.confirmClear)){
                     this.currentItemsCount =0;
                     this.totalPrice = 0;
                     this.orderToCart={};
