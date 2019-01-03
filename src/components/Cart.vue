@@ -175,7 +175,7 @@
                     this.$store.state.socket.emit('order', {order: this.orderToCart, eatIn: this.eatIn});
                     this.orderToCart = {};
                     this.totalPrice = 0;
-                    localStorage.clear();
+                    this.clearStorage();
                     alert(this.uiLabels.thankOrder);
                 }
                 else{
@@ -219,12 +219,15 @@
             },
 
             clearCart: function () {
-                if (confirm(this.uiLabels.confirmClear)){
-                    this.currentItemsCount =0;
-                    this.totalPrice = 0;
-                    this.orderToCart={};
-                    localStorage.clear();
+                if(this.currentItemsCount > 0){
+                    if (confirm(this.uiLabels.confirmClear)){
+                        this.currentItemsCount =0;
+                        this.totalPrice = 0;
+                        this.orderToCart={};
+                        this.clearStorage();
+                    }
                 }
+
             }
 
         }

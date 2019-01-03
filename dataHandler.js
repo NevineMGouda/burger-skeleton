@@ -68,7 +68,6 @@ Data.prototype.getOrderNumber = function () {
 };
 
 Data.prototype.addOrder = function (order) {
-  console.log(order);
   var orderId = this.getOrderNumber();
   this.orders[orderId]={};
   this.orders[orderId].items = order.order;

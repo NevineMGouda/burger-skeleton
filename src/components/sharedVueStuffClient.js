@@ -37,7 +37,7 @@ var sharedVueStuffClient = {
     }.bind(this));
     this.$store.state.socket.on('switchLang', function (data) {
       this.$store.commit('setUiLabels', data);
-      this.getMenu();
+        this.getMenu();
     }.bind(this));
     this.getMenu();
 
@@ -49,6 +49,7 @@ var sharedVueStuffClient = {
       }
       if (localStorage.getItem('uiLabels')) {
           this.uiLabels = JSON.parse(localStorage.getItem('uiLabels'));
+          this.getMenu();
       }
       if (localStorage.getItem('newOrderItem')) {
           this.newOrderItem = JSON.parse(localStorage.getItem('newOrderItem'));
@@ -56,7 +57,6 @@ var sharedVueStuffClient = {
       if (localStorage.getItem('eatIn')) {
           this.eatIn = Number(localStorage.getItem('eatIn'));
       }
-      this.getMenu();
   },
   watch: {
       lang: {
@@ -108,6 +108,31 @@ var sharedVueStuffClient = {
           localStorage.setItem('reloaded', '1');
           location.reload();
         }
+    },
+    getMenu: function(){
+        if ('home' in this.uiLabels){
+            document.getElementById("homeTitle").innerHTML = this.uiLabels.home;
+            document.getElementById("menuTitle").innerHTML = this.uiLabels.menu;
+            document.getElementById("cartTitle").innerHTML = this.uiLabels.cartLabel;
+            document.getElementById("languageTitle").innerHTML = this.uiLabels.languageLabel;
+            document.getElementById("languageSelected").innerHTML = this.uiLabels.language;
+            document.getElementById("languageButton").onclick = this.switchLang;
+        }
+        else{
+            document.getElementById("homeTitle").innerHTML = "Home";
+            document.getElementById("menuTitle").innerHTML = "Menu";
+            document.getElementById("cartTitle").innerHTML = "Cart";
+            document.getElementById("languageTitle").innerHTML = "Language";
+            document.getElementById("languageSelected").innerHTML = "Svenska";
+            document.getElementById("languageButton").onclick = this.switchLang;
+        }
+    },
+    clearStorage: function(){
+        localStorage.removeItem('orderToCart');
+        localStorage.removeItem('totalPrice');
+        localStorage.removeItem('currentItemsCount');
+        localStorage.removeItem('newOrderItem');
+        localStorage.removeItem('eatIn');
     }
   }
 };

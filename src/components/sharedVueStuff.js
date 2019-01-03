@@ -27,14 +27,7 @@ var sharedVueStuff = {
   mounted() {
   },
   methods: {
-    getMenu: function(){
-        document.getElementById("homeTitle").innerHTML = this.uiLabels.home;
-        document.getElementById("menuTitle").innerHTML = this.uiLabels.menu;
-        document.getElementById("cartTitle").innerHTML = this.uiLabels.cartLabel;
-        document.getElementById("languageTitle").innerHTML = this.uiLabels.languageLabel;
-        document.getElementById("languageSelected").innerHTML = this.uiLabels.language;
-        document.getElementById("languageButton").onclick = this.switchLang;
-      },
+
   }
 };
 
