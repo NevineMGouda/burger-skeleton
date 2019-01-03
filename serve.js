@@ -59,7 +59,6 @@ io.on('connection', function (socket) {
   });
   socket.on('kitchenSwitchLang', function (lang) {
       socket.emit('kitchenSwitchLang', data.getUILabels(lang));
-      io.emit('kitchenSwitchLang', data.getUILabels(lang));
   });
   // when order is marked as done, send updated queue to all connected clients
   socket.on('orderDone', function (orderId) {
