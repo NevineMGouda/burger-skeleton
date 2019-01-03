@@ -11,7 +11,7 @@
       <div class="col-md-2 align-center"> {{uiLabels.orderNumber}} </div>
       <div class="col align-center"> {{uiLabels.eatInOrTakeAway}} </div>
       <div class="col align-center"> {{uiLabels.ingredients}} </div>
-      <div class="col-3 align-center"> {{uiLabels.status}}  </div>
+      <div class="col align-center"> {{uiLabels.status}}  </div>
     </div>
     <div >
     <OrderItemToPrepare
@@ -38,15 +38,26 @@
     </div>
     <div v-for="(order, orderkey) in orders"
       v-if="order.status === 'done'" :key="orderkey" >
-      <OrderItem
-        v-for="(item, key) in order.items"
-        :order-id="orderkey"
-        :order="item"
-        :lang="lang"
-        :ui-labels="uiLabels"
-        :eat-in="order.eatIn"
-        :key="key">
-      </OrderItem>
+      <div class="row grid-row">
+        <div class="col-md-3 align-center">
+          {{orderkey}}
+        </div>
+        <div class="col align-center ">
+          <span v-if="order.eatIn === 1 ">{{uiLabels.eatIn}}</span>
+          <span v-if="order.eatIn === 0 ">{{uiLabels.takeAway}}</span>
+        </div>
+        <div class="col align-center">
+        <OrderItem
+          v-for="(item, key) in order.items"
+          :order-id="orderkey"
+          :order="item"
+          :lang="lang"
+          :ui-labels="uiLabels"
+          :eat-in="order.eatIn"
+          :key="key">
+        </OrderItem>
+        </div>
+      </div>
     </div>
   </div>
 </div>	
@@ -71,19 +82,50 @@ export default {
       chosenIngredients: [],
       price: 0,
       uiLabels: {},
-      lang: 'sv'
+      lang: 'en'
     }
   },
-    created: function(){
+  created: function(){
+      // localStorage.clear();
       this.hideNav();
-        this.$store.state.socket.emit('kitchenpageLoaded', this.lang);
-        this.$store.state.socket.on('kitchenLabels', function (data) {
-            this.uiLabels = data.uiLabels;
-        }.bind(this));
-        this.$store.state.socket.on('kitchenSwitchLang', function (data) {
-            this.uiLabels=data;
-        }.bind(this));
+
+      if (localStorage.getItem('kitchenlang')){
+          this.$store.state.socket.emit('kitchenpageLoaded', JSON.parse(localStorage.getItem('kitchenlang')));
+      }
+      else{
+          this.$store.state.socket.emit('kitchenpageLoaded');
+      }
+
+      this.$store.state.socket.on('kitchenLabels', function (data) {
+          this.uiLabels = data.uiLabels;
+      }.bind(this));
+      this.$store.state.socket.on('kitchenSwitchLang', function (data) {
+          this.uiLabels=data;
+      }.bind(this));
+  },
+    mounted(){
+        if (localStorage.getItem('kitchenlang')) {
+            this.lang = JSON.parse(localStorage.getItem('kitchenlang'));
+        }
+        if (localStorage.getItem('kitchenuiLabels')) {
+            this.uiLabels = JSON.parse(localStorage.getItem('kitchenuiLabels'));
+        }
     },
+    watch:
+        {
+          lang: {
+              handler() {
+                  localStorage.setItem('kitchenlang', JSON.stringify(this.lang));
+
+              },
+          },
+          uiLabels: {
+              handler() {
+                  localStorage.setItem('kitchenuiLabels', JSON.stringify(this.uiLabels));
+              },
+          }
+
+        },
   methods: {
     markDone: function (orderid) {
       this.$store.state.socket.emit("orderDone", orderid);

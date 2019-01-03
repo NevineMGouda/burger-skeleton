@@ -73,14 +73,7 @@
                                  v-if="order.status !== 'done'" :key="orderkey">
                                 <li class="nav-item">
                                     <a class="nav-link mbr-fonts-style active display-7" role="tab" data-toggle="tab" href="#tabs1-y_tab0">
-                                        <OrderItem
-                                                v-for="(item, key) in order.items"
-                                                :order-id="orderkey"
-                                                :order="item"
-                                                :lang="lang"
-                                                :ui-labels="uiLabels"
-                                                :key="key">
-                                        </OrderItem>
+                                        {{orderkey}}
                                     </a>
                                 </li>
                             </div>
