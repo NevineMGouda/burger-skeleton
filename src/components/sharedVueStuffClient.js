@@ -78,7 +78,6 @@ var sharedVueStuffClient = {
       },
       eatIn:{
           handler() {
-              console.log("detected eatIn changed");
               localStorage.setItem('eatIn', JSON.stringify(this.eatIn));
 
           },
@@ -101,6 +100,14 @@ var sharedVueStuffClient = {
     },
     setEatIn: function(value){
         this.eatIn = value;
+    },
+    reloadPage: function(){
+        if (localStorage.getItem('reloaded')) {
+          localStorage.removeItem('reloaded');
+        } else {
+          localStorage.setItem('reloaded', '1');
+          location.reload();
+        }
     }
   }
 };

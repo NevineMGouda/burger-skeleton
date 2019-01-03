@@ -1,5 +1,6 @@
-<template>
+<template onload="document.refresh();">
   <div>
+    <!--Choose your ingredient text section-->
   <section class="header5 cid-rdokJKPrV4 mbr-fullscreen mbr-parallax-background" id="header5-m">
 
 
@@ -9,9 +10,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="mbr-white col-md-10">
-          <h1 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">Customize Your Own Order</h1>
+          <h1 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">{{uiLabels.customize}}</h1>
           <p class="mbr-text align-center display-5 pb-3 mbr-fonts-style">
-            Choose Your Ingredients Below</p>
+            {{uiLabels.choose}}</p>
 
         </div>
       </div>
@@ -23,6 +24,7 @@
       </a>
     </div>
   </section>
+    <!--List of ingredients section-->
   <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
     <div class="container">
       <div class="row justify-content-center">
@@ -46,24 +48,60 @@
             <p v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </p>
             <button class="btn btn-dark btn-sm" v-on:click="addToCart()"> {{uiLabels.addtoCart}} </button>
             <button class="btn btn-dark btn-sm" v-on:click="goToCart()" > {{uiLabels.cart}} </button>
-            <h1 v-if="orderNumber.length != '0'">  {{"your order number is: " +orderNumber}}</h1>
-            <h1 v-if="orders.length !== '0'">{{ uiLabels.ordersInQueue }}</h1>
-            <div v-for="(order, orderkey) in orders"
-                 v-if="order.status !== 'done'" :key="orderkey" >
-              <OrderItem
-                      v-for="(item, key) in order.items"
-                      :order-id="orderkey"
-                      :order="item"
-                      :lang="lang"
-                      :ui-labels="uiLabels"
-                      :key="key">
-              </OrderItem>
-            </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
+
+
+    <!--Add to cart and items selected section-->
+    <section class="tabs1 cid-re2xcgF2G2 mbr-parallax-background" id="tabs1-w">
+      <div class="mbr-overlay" style="opacity: 0.4; background-color: rgb(109, 107, 107);">
+      </div>
+      <div class="container">
+        <h2 class="mbr-white align-center pb-5 mbr-fonts-style mbr-bold display-2">
+          {{ uiLabels.myBurger }}
+        </h2>
+        <div class="media-container-row">
+          <div class="col-12 col-md-8">
+            <div class="tab-content">
+              <div id="tab1" class="tab-pane in active" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="mbr-text py-5 mbr-fonts-style display-7">
+                      <strong>
+                        {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
+                      </strong>
+
+                      <br>
+                      <strong>
+                        <span v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </span>
+                      </strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link mbr-fonts-style active show display-7" aria-selected="true" v-on:click="addToCart()">
+                  {{uiLabels.addtoCart}}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mbr-fonts-style active show display-7" aria-selected="true" v-on:click="goToCart()">
+                  {{uiLabels.cart}}
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -102,6 +140,7 @@ export default {
     this.$store.state.socket.on('orderNumber', function (data) {
       this.orderNumber = data;
     }.bind(this));
+    this.reloadPage();
 
   },
   computed: function(){
