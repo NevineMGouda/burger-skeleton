@@ -1,4 +1,4 @@
-<template onload="document.refresh();">
+<template>
   <div>
     <!--Choose your ingredient text section-->
   <section class="header5 cid-rdokJKPrV4 mbr-fullscreen mbr-parallax-background" id="header5-m">
@@ -30,17 +30,21 @@
       <div class="row justify-content-center">
         <div class="mbr-white col-md-12">
           <div id="ordering" class="container">
-            <h1>{{ uiLabels.ingredients }}</h1>
-            <div class="ing-grid">
-              <Ingredient
-                      ref="ingredient"
-                      v-for="item in ingredients"
-                      v-on:increment="addToOrder(item)"
-                      v-on:decrement="removeFromOrder(item)"
-                      :item="item"
-                      :lang="getLang(uiLabels.language)"
-                      :key="item.ingredient_id">
-              </Ingredient>
+            <div v-for="i in 6" :key="i">
+                <h3 class="mbr-white pb-5 mbr-fonts-style mbr-bold display-2 category"> {{categories[i-1]["category_"+getLang(uiLabels.language)]}} </h3>
+                <div class="ing-grid">
+                    <Ingredient
+                            ref="ingredient"
+                            v-for="item in ingredients"
+                            v-if="item.category == i"
+                            v-on:increment="addToOrder(item)"
+                            v-on:decrement="removeFromOrder(item)"
+                            :item="item"
+                            :lang="getLang(uiLabels.language)"
+                            :key="item.ingredient_id">
+                    </Ingredient>
+                    <br>
+                </div>
             </div>
           </div>
         </div>
@@ -265,6 +269,12 @@ export default {
 .ing-grid{
   display: grid;
   grid-gab: 1em;
+  border-color: red;
   grid-template-columns: repeat(auto-fit, calc(14em + 1px));
+}
+.category{
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 20pt;
 }
 </style>

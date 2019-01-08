@@ -4,6 +4,7 @@ let csv = require("csvtojson");
 
 let ingredientsDataName = "ingredients";
 let transactionsDataName = "transactions";
+let categoriesDataName = "categories";
 let defaultLanguage = "en";
 
 // Store data in an object to keep the global namespace clean
@@ -36,7 +37,10 @@ Data.prototype.getIngredients = function () {
     return obj;
   });
 };
-
+Data.prototype.getCategories = function () {
+    var d = this.data;
+    return d[categoriesDataName]
+};
 /*
   Function to load initial data from CSV files into the object
 */
@@ -55,6 +59,7 @@ Data.prototype.initializeData = function() {
   this.initializeTable(ingredientsDataName);
   // Load initial stock. Make alterations in the CSV file.
   this.initializeTable(transactionsDataName);
+  this.initializeTable(categoriesDataName);
 }
 /*
   Adds an order to to the queue and makes an withdrawal from the
