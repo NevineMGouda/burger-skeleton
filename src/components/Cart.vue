@@ -41,6 +41,11 @@
                                 {{uiLabels.price}}: {{totalPrice}} SEK
                             </div>
                             <div>
+                                <span v-if="eatIn === 1 ">{{uiLabels.eatIn}}</span>
+                                <span v-if="eatIn === 0 ">{{uiLabels.takeAway}}</span>
+                                <span v-if="eatIn === -1 "></span>
+                            </div>
+                            <div>
                                 <button class="btn btn-dark btn-sm" v-on:click="clearCart()"> {{uiLabels.clear}} </button>
                                 <button class="btn btn-dark btn-sm" v-on:click="placeOrder()"> {{uiLabels.order}} </button>
                                 <br>
@@ -141,6 +146,9 @@
             if (localStorage.getItem('newOrderItem')) {
                 this.addItem()
             }
+            if (localStorage.getItem('eatIn')) {
+                this.eatIn = Number(localStorage.getItem('eatIn'));
+            }
         },
         watch: {
             currentItemsCount: {
@@ -158,6 +166,11 @@
                     localStorage.setItem('totalPrice', this.totalPrice);
                 },
             },
+            eatIn:{
+                handler() {
+                    localStorage.setItem('eatIn', this.eatIn);
+                },
+            }
 
         },
         methods:{

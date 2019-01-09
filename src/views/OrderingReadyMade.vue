@@ -1,52 +1,50 @@
 <template>
   <div>
     <!--Choose your ingredient text section-->
-  <section class="header5 cid-rdokJKPrV4 mbr-fullscreen mbr-parallax-background" id="header5-m">
-
-
-
+  <section class="header5 cid-reCGRbRPd8 mbr-fullscreen mbr-parallax-background" id="header5-10">
     <div class="mbr-overlay" style="opacity: 0.6; background-color: rgb(0, 0, 0);">
     </div>
     <div class="container">
       <div class="row justify-content-center">
         <div class="mbr-white col-md-10">
-          <h1 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">{{uiLabels.customize}}</h1>
+          <h1 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">{{uiLabels.setMenu}}</h1>
           <p class="mbr-text align-center display-5 pb-3 mbr-fonts-style">
-            {{uiLabels.choose}}</p>
+            {{uiLabels.chooseSetMenu}}</p>
 
         </div>
       </div>
     </div>
 
     <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
-      <a href="#header5-r">
+      <a href="#header5-t">
         <i class="mbri-down mbr-iconfont"></i>
       </a>
     </div>
   </section>
     <!--List of ingredients section-->
-  <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
+  <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-t">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="mbr-white col-md-12 justify-content-center">
-          <div id="ordering" class="container">
-            <div v-for="i in 6" :key="i" v-bind:id="'category'+i">
-                <h3 class="mbr-white pb-3 mbr-fonts-style mbr-bold display-2 category" v-if="categories.hasOwnProperty(i-1)">
-                    {{categories[i-1]["category_"+getLang(uiLabels.language)]}}
-                </h3>
-                <div class="ing-grid">
-                    <Ingredient
-                            ref="ingredient"
-                            v-for="item in ingredients"
-                            v-if="item.category == i"
-                            v-on:increment="addToOrder(item)"
-                            v-on:decrement="removeFromOrder(item)"
-                            :item="item"
-                            :lang="getLang(uiLabels.language)"
-                            :key="item.ingredient_id">
-                    </Ingredient>
-                    <br>
-                </div>
+          <div id="ordering-ready-made" class="container">
+            <div v-for="i in 5" :key="i" v-bind:id="'category'+i+6">
+              <h3 class="mbr-white pb-3 mbr-fonts-style mbr-bold display-2 category" v-if="categories.hasOwnProperty(i+5)">
+                {{categories[i+5]["category_"+getLang(uiLabels.language)]}}
+              </h3>
+              <div class="ing-grid">
+
+                <SetMenuItem
+                        ref="item"
+                        v-for="item in setMenuItems"
+                        v-if="item.category == i+6"
+                        v-on:increment="addToOrder(item)"
+                        v-on:decrement="removeFromOrder(item)"
+                        :item="item"
+                        :lang="getLang(uiLabels.language)"
+                        :key="item.item_id">
+                </SetMenuItem>
+                <br>
+              </div>
             </div>
           </div>
         </div>
@@ -114,6 +112,7 @@
 //use for importing will be used in the template above and also below in
 //components
 import Ingredient from '@/components/Ingredient.vue'
+import SetMenuItem from '@/components/SetMenuItem.vue'
 import OrderItem from '@/components/OrderItem_ordering_cart.vue'
 
 //import methods and data that are shared between ordering and kitchen views
@@ -124,9 +123,10 @@ import sharedVueStuffClient from '@/components/sharedVueStuffClient.js'
 necessary Vue instance (found in main.js) to import your data and methods */
 
 export default {
-  name: 'Ordering',
+  name: 'OrderingReadyMade',
   components: {
     Ingredient,
+    SetMenuItem,
     OrderItem,
   },
   mixins: [sharedVueStuff, sharedVueStuffClient], // include stuff that is used in both
@@ -149,8 +149,8 @@ export default {
   },
   computed: function(){
     var i;
-    for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-      this.$refs.ingredient[i].resetCounter();
+    for (i = 0; i < this.$refs.item.length; i += 1) {
+      this.$refs.item[i].resetCounter();
     }
   },
   methods: {
@@ -179,13 +179,13 @@ export default {
         };
       // make use of socket.io's magic to send the stuff to the kitchen via the server (app.js)
       this.$store.state.socket.emit('order', {order: order});
-      console.log(this.$refs.ingredient);
       //set all counters to 0. Notice the use of $refs
-      for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-        this.$refs.ingredient[i].resetCounter();
+      for (i = 0; i < this.$refs.item.length; i += 1) {
+        this.$refs.item[i].resetCounter();
       }
       this.price = 0;
       this.chosenIngredients = [];
+      this.eatIn = -1;
     },
 
     addToCart: function(){
@@ -201,22 +201,15 @@ export default {
             alert(this.uiLabels.noItem);
         }
         else{
-            var valid;
-            valid = this.checkIfValidOrder();
-            if (valid){
-                console.log({order: order});
-                this.newOrder({order: order});
-                //set all counters to 0. Notice the use of $refs
-                for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-                    this.$refs.ingredient[i].resetCounter();
-                }
-                this.price = 0;
-                this.chosenIngredients = [];
-                alert(this.uiLabels.itemSuccess);
+            console.log({order: order});
+            this.newOrder({order: order});
+            //set all counters to 0. Notice the use of $refs
+            for (i = 0; i < this.$refs.item.length; i += 1) {
+                this.$refs.item[i].resetCounter();
             }
-            else{
-                alert(this.uiLabels.missingCategory);
-            }
+            this.price = 0;
+            this.chosenIngredients = [];
+            alert(this.uiLabels.itemSuccess);
         }
     },
     getItemStock: function(){
@@ -232,11 +225,9 @@ export default {
         return min_stock;
     },
     checkIfValidOrder: function(){
-        console.log(this.chosenIngredients);
         var i, foundCategories, itemCategory;
         foundCategories = [];
         for (i=0;i<this.chosenIngredients.length;i++){
-            console.log(this.chosenIngredients[i].category);
             itemCategory = this.chosenIngredients[i].category;
             if (itemCategory < 4){
                 foundCategories.push(itemCategory);
@@ -272,7 +263,7 @@ export default {
 </script>
 <style scoped>
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
-#ordering {
+#ordering-ready-made {
   margin:auto;
   padding-bottom: 80px;
   max-width: 100%;
@@ -284,11 +275,11 @@ export default {
   top:0;
   z-index: -2;
 }
-.ingredient {
+.SetMenuItem {
   border: 1px solid #ccd;
   padding: 5px;
   width: 14em;
-  height: 14em;
+  height: 23em;
   /*background-image: url('~@/assets/exampleImage.jpg');*/
   color: white;
   text-align: center;
@@ -298,9 +289,6 @@ export default {
 #head-line {
 	padding: 0px 150px 40px;
 	font-size: 24pt;
-}
-#header5-r{
-    padding-top: 90px;
 }
 
 .ing-grid{

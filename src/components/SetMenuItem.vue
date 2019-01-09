@@ -1,27 +1,36 @@
 <template>
-  <div class="ingredient">
+  <div class="SetMenuItem">
     <label>
       {{item["ingredient_"+ lang]}}
       <br>
+      <ul class="container-fluid">
+        <span v-if="item.milk_free===1"><li>Milk Free</li></span>
+        <span v-else><br></span>
+
+        <span v-if="item.gluten_free===1"><li>Gluten Free</li></span>
+        <span v-else><br></span>
+        <span v-if="item.vegan===1"><li>Vegan</li></span>
+        <span v-else><br></span>
+      </ul>
       <span v-if="lang == 'en'">Price</span><span v-if="lang == 'sv'">Pris</span>:
       {{item.selling_price}}:-
-      <br>
       <br>
       <button class="btn-warning btn-xs" v-on:click="decrementCounter()"> - </button>
       {{ counter }}
       <button class="btn-warning btn-xs" v-on:click="incrementCounter(item.stock)" > + </button>
+
       <br>
       <br>
-      <img :src="require('../assets/'+ item.image)" width="100em" height="80em">
+      <img :src="require('../assets/'+ item.image)" width="140em" height="140em">
     </label>
   </div>
 </template>
 <script>
 export default {
-  name: 'Ingredient',
+  name: 'SetMenuItem',
   props: {
     item: Object,
-    lang: String
+    lang: String,
   },
     data: function () {
     return {
@@ -38,7 +47,7 @@ export default {
         this.$emit('increment');
       }
       else{
-        alert(uiLabels.maxStock);
+        alert("Sorry, not enough in stock :(");
       }
     },
 
