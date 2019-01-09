@@ -26,12 +26,12 @@
   </section>
     <!--List of ingredients section-->
   <section class="header5 cid-rdLXviWWKe mbr-fullscreen" id="header5-r">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center">
-        <div class="mbr-white col-md-12">
+        <div class="mbr-white col-md-12 justify-content-center">
           <div id="ordering" class="container">
-            <div v-for="i in 6" :key="i">
-                <h3 class="mbr-white pb-5 mbr-fonts-style mbr-bold display-2 category"> {{categories[i-1]["category_"+getLang(uiLabels.language)]}} </h3>
+            <div v-for="i in 6" :key="i" v-bind:id="'category'+i">
+                <h3 class="mbr-white pb-3 mbr-fonts-style mbr-bold display-2 category"> {{categories[i-1]["category_"+getLang(uiLabels.language)]}} </h3>
                 <div class="ing-grid">
                     <Ingredient
                             ref="ingredient"
@@ -198,14 +198,21 @@ export default {
             alert(this.uiLabels.noItem);
         }
         else{
-          this.newOrder({order: order});
-          //set all counters to 0. Notice the use of $refs
-          for (i = 0; i < this.$refs.ingredient.length; i += 1) {
-              this.$refs.ingredient[i].resetCounter();
-          }
-          this.price = 0;
-          this.chosenIngredients = [];
-          alert(this.uiLabels.itemSuccess);
+            var valid;
+            valid = this.checkIfValidOrder();
+            if (valid){
+                this.newOrder({order: order});
+                //set all counters to 0. Notice the use of $refs
+                for (i = 0; i < this.$refs.ingredient.length; i += 1) {
+                    this.$refs.ingredient[i].resetCounter();
+                }
+                this.price = 0;
+                this.chosenIngredients = [];
+                alert(this.uiLabels.itemSuccess);
+            }
+            else{
+                alert(this.uiLabels.missingCategory);
+            }
         }
     },
     getItemStock: function(){
@@ -219,6 +226,29 @@ export default {
 
         }
         return min_stock;
+    },
+    checkIfValidOrder: function(){
+        console.log(this.chosenIngredients);
+        var i, foundCategories, itemCategory;
+        foundCategories = [];
+        for (i=0;i<this.chosenIngredients.length;i++){
+            console.log(this.chosenIngredients[i].category);
+            itemCategory = this.chosenIngredients[i].category;
+            if (itemCategory < 4){
+                foundCategories.push(itemCategory);
+            }
+            if(foundCategories.includes(1) && foundCategories.includes(2)){
+                return true;
+            }
+        }
+        if (foundCategories.length === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
     },
     goToCart: function(){
         location.href = "#/cart";
@@ -240,7 +270,7 @@ export default {
 /* scoped in the style tag means that these rules will only apply to elements, classes and ids in this template and no other templates. */
 #ordering {
   margin:auto;
-  padding-top: 50px;
+  padding-bottom: 80px;
   max-width: 100%;
 }
 
@@ -271,9 +301,10 @@ export default {
   grid-gab: 1em;
   border-color: red;
   grid-template-columns: repeat(auto-fit, calc(14em + 1px));
+  padding-bottom: 40px;
 }
 .category{
-    padding-top: 40px;
+    /*padding-top: 40px;*/
     padding-bottom: 20px;
     font-size: 20pt;
 }
