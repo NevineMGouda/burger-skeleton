@@ -167,7 +167,7 @@ export default {
     removeFromOrder:function (item) {
         if( this.chosenIngredients.indexOf(item) !== -1 ){
           this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
-          this.price -= +item.selling_price;
+          this.price -= item.selling_price;
         }
     },
     placeOrder: function () {
