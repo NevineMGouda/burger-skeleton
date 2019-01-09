@@ -52,7 +52,7 @@
 
 <style scoped>
 #headline{
-    color:black;
-    background: linear-gradient(#149dcc, grey, transparent);
+    color: darkslategrey;
+    background: linear-gradient(greenyellow, ghostwhite, transparent);
 }
 </style>
