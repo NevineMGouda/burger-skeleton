@@ -6,6 +6,8 @@ var sharedVueStuff = {
     return {
       orders: {},
       ingredients: {},
+      categories: {},
+      setMenuItems: {}
     }
   },
 
@@ -14,6 +16,8 @@ var sharedVueStuff = {
     this.$store.state.socket.on('initialize', function (data) {
       this.orders = data.orders;
       this.ingredients = data.ingredients;
+      this.categories = data.categories;
+      this.setMenuItems = data.setMenuItems;
     }.bind(this));
     this.$store.state.socket.on('currentQueue', function (data) {
       this.orders = data.orders;

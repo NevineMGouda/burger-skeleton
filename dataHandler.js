@@ -4,6 +4,9 @@ let csv = require("csvtojson");
 
 let ingredientsDataName = "ingredients";
 let transactionsDataName = "transactions";
+let categoriesDataName = "categories";
+let setMenuTransactionsDataName = "setMenuTransactions";
+let setMenuItemsDataName = "menuItems";
 let defaultLanguage = "en";
 
 // Store data in an object to keep the global namespace clean
@@ -36,7 +39,23 @@ Data.prototype.getIngredients = function () {
     return obj;
   });
 };
-
+Data.prototype.getCategories = function () {
+    var d = this.data;
+    return d[categoriesDataName]
+};
+Data.prototype.getSetMenuItems = function () {
+    var d = this.data;
+    return d[setMenuItemsDataName].map(function (obj) {
+        obj.stock = d[setMenuTransactionsDataName].reduce(function (sum, trans) {
+            if (trans.ingredient_id === obj.ingredient_id) {
+                return sum + trans.change;
+            } else {
+                return sum;
+            }
+        }, 0);
+        return obj;
+    });
+};
 /*
   Function to load initial data from CSV files into the object
 */
@@ -55,6 +74,9 @@ Data.prototype.initializeData = function() {
   this.initializeTable(ingredientsDataName);
   // Load initial stock. Make alterations in the CSV file.
   this.initializeTable(transactionsDataName);
+  this.initializeTable(categoriesDataName);
+  this.initializeTable(setMenuTransactionsDataName);
+  this.initializeTable(setMenuItemsDataName);
 }
 /*
   Adds an order to to the queue and makes an withdrawal from the

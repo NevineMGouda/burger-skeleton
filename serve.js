@@ -40,6 +40,8 @@ io.on('connection', function (socket) {
     socket.on('pageLoaded', function(lang){
         socket.emit('initialize', { orders: data.getAllOrders(),
             uiLabels: data.getUILabels(lang),
+            categories: data.getCategories(),
+            setMenuItems: data.getSetMenuItems(),
             ingredients: data.getIngredients() });
     });
     socket.on('kitchenpageLoaded', function(lang){

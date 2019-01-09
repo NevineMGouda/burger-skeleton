@@ -6,11 +6,13 @@
 
 <script>
 import Ordering from "./views/Ordering.vue"
+import OrderingReadyMade from "./views/OrderingReadyMade.vue"
 
 export default {
   name: 'app',
   components: {
-    Ordering
+    Ordering,
+    OrderingReadyMade
   }
 }
 </script>

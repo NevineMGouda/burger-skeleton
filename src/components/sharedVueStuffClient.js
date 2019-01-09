@@ -5,7 +5,7 @@ var sharedVueStuffClient = {
     data: function () {
         return {
             newOrderItem: [],
-            eatIn: 1
+            eatIn: -1
         }
     },
   computed: {
@@ -100,7 +100,9 @@ var sharedVueStuffClient = {
     },
     setEatIn: function(value){
         this.eatIn = value;
+
     },
+
     reloadPage: function(){
         if (localStorage.getItem('reloaded')) {
           localStorage.removeItem('reloaded');
