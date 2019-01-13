@@ -61,7 +61,7 @@
 
 
     <!--Add to cart and items selected section-->
-    <section class="tabs1 cid-re2xcgF2G2 mbr-parallax-background" id="tabs1-w">
+    <section class="tabs1 cid-re2xcgF2G2 mbr-fullscreen mbr-parallax-background" id="tabs1-w">
       <div class="mbr-overlay" style="opacity: 0.4; background-color: rgb(109, 107, 107);">
       </div>
       <div class="container">
@@ -75,12 +75,27 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="mbr-text py-5 mbr-fonts-style display-7">
+                      <!--<strong>-->
+                        <!--{{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}-->
+                      <!--</strong>-->
                       <strong>
-                        {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
+                        <div class="container" v-if=" Object.keys(chosenIngredientsId).length !== 0">
+                          <div class="row grid-item-header">
+                            <div class = "col"> {{uiLabels.ingredients}} </div>
+                            <div class = "col"> {{uiLabels.quantity}} </div>
+                          </div>
+                          <div v-for="chosen in chosenIngredientsId" class="row grid-item-row">
+                            <div class = "col">
+                              {{chosen["ingredient_"+getLang(uiLabels.language)]}}
+                            </div>
+                            <div class = "col">
+                              {{chosen.quantity}}
+                            </div>
+                          </div>
+                        </div>
                       </strong>
-
                       <br>
-                      <strong>
+                      <strong class="price">
                         <span v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </span>
                       </strong>
                     </p>
@@ -134,6 +149,7 @@ export default {
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
+      chosenIngredientsId: {},
       price: 0,
       orderNumber: "",
       ordertocart:''
@@ -156,7 +172,14 @@ export default {
   methods: {
     addToOrder: function (item) {
       if(item.stock >= 1){
-        this.chosenIngredients.push(item);
+          this.chosenIngredients.push(item);
+        if (item.ingredient_id in this.chosenIngredientsId){
+            this.chosenIngredientsId[item.ingredient_id].quantity += 1;
+        }
+        else{
+            this.chosenIngredientsId[item.ingredient_id] = item;
+            this.chosenIngredientsId[item.ingredient_id].quantity = 1;
+        }
         this.price += +item.selling_price;
       }
       else{
@@ -166,7 +189,13 @@ export default {
 
     removeFromOrder:function (item) {
         if( this.chosenIngredients.indexOf(item) !== -1 ){
-          this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
+            this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
+            if(this.chosenIngredientsId[item.ingredient_id].quantity > 1){
+                this.chosenIngredientsId[item.ingredient_id].quantity -= 1;
+            }
+            else{
+                delete this.chosenIngredientsId[item.ingredient_id];
+            }
           this.price -= item.selling_price;
         }
     },
@@ -212,6 +241,7 @@ export default {
                 }
                 this.price = 0;
                 this.chosenIngredients = [];
+                this.chosenIngredientsId = {};
                 alert(this.uiLabels.itemSuccess);
             }
             else{
@@ -232,7 +262,6 @@ export default {
         return min_stock;
     },
     checkIfValidOrder: function(){
-        console.log(this.chosenIngredients);
         var i, foundCategories, itemCategory;
         foundCategories = [];
         for (i=0;i<this.chosenIngredients.length;i++){
@@ -299,6 +328,22 @@ export default {
 	padding: 0px 150px 40px;
 	font-size: 24pt;
 }
+.grid-item-header{
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  border: solid black;
+  border-width: 4px 4px 2px 4px;
+  padding: 4px;
+  background: #149dcc;
+}
+
+.grid-item-row{
+  border: solid 2px black;
+  font-size: 20px;
+  padding: 30px 0;
+  align-content: center;
+}
 #header5-r{
     padding-top: 90px;
 }
@@ -314,5 +359,8 @@ export default {
     /*padding-top: 40px;*/
     padding-bottom: 20px;
     font-size: 20pt;
+}
+.price{
+  font-size: 20px;
 }
 </style>

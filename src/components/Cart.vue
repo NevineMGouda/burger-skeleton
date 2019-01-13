@@ -64,7 +64,7 @@
                 </a>
             </div>
         </section>
-        <section class="tabs1 cid-re2zY5gxPH mbr-parallax-background" id="tabs1-y">
+        <section class="tabs1 cid-re2zY5gxPH mbr-fullscreen mbr-parallax-background" id="tabs1-y">
 
             <div class="mbr-overlay" style="opacity: 0.6; background-color: rgb(35, 35, 35);">
             </div>
@@ -73,18 +73,15 @@
                     {{ uiLabels.ordersInQueue }}</h2>
                 <div class="media-container-row">
                     <div class="col-12 col-md-8">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-tabs">
                             <div v-for="(order, orderkey) in orders"
                                  v-if="order.status !== 'done'" :key="orderkey">
                                 <li class="nav-item">
-                                    <a class="nav-link mbr-fonts-style active display-7" role="tab" data-toggle="tab" href="#tabs1-y_tab0">
+                                    <a class="nav-link mbr-fonts-style active display-7 isDisabled">
                                         {{orderkey}}
                                     </a>
                                 </li>
                             </div>
-
-
-
                         </ul>
                         <div class="tab-content">
                             <div id="tab1" class="tab-pane in active" role="tabpanel">
@@ -280,5 +277,10 @@
     grid-template-columns: auto auto auto auto auto auto;
     text-align: left;
 
+}
+.isDisabled {
+    color: currentColor;
+    pointer-events: none;
+    text-decoration: none;
 }
 </style>

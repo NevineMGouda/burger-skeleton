@@ -59,7 +59,7 @@
 
 
     <!--Add to cart and items selected section-->
-    <section class="tabs1 cid-re2xcgF2G2 mbr-parallax-background" id="tabs1-w">
+    <section class="tabs1 cid-re2xcgF2G2 mbr-fullscreen mbr-parallax-background" id="tabs1-w">
       <div class="mbr-overlay" style="opacity: 0.4; background-color: rgb(109, 107, 107);">
       </div>
       <div class="container">
@@ -73,6 +73,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="mbr-text py-5 mbr-fonts-style display-7">
+                      {{chosenIngredients}}
                       <strong>
                         {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
                       </strong>

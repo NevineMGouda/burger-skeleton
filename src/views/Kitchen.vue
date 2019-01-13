@@ -1,7 +1,7 @@
 <template>
 <div id="orders">
   
-  <button class="btn btn-" v-on:click="kitchenSwitchLang()">{{uiLabels.language}}</button>
+  <button class="btn lang-btn" v-on:click="kitchenSwitchLang()">{{uiLabels.language}}</button>
   <br>
 
   <div class="container-fluid">
@@ -228,5 +228,20 @@ export default {
   .nowrap {
     white-space:nowrap;
   }
+  .lang-btn {
+    margin: 10px;
+    color: rgba(103, 192, 103, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(103, 192, 103, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+  }
+    .lang-btn:hover {
+      color: #FFF;
+      background: rgb(103, 192, 103, 0.75);
+      border: 2px solid rgb(103, 192, 103, 0.75);
+    }
 
 </style>
