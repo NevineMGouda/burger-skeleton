@@ -172,7 +172,8 @@ export default {
   methods: {
     addToOrder: function (item) {
       if(item.stock >= 1){
-          this.chosenIngredients.push(item);
+        this.chosenIngredients.push(item);
+        this.price += +item.selling_price;
         if (item.ingredient_id in this.chosenIngredientsId){
             this.chosenIngredientsId[item.ingredient_id].quantity += 1;
         }
@@ -180,7 +181,6 @@ export default {
             this.chosenIngredientsId[item.ingredient_id] = item;
             this.chosenIngredientsId[item.ingredient_id].quantity = 1;
         }
-        this.price += +item.selling_price;
       }
       else{
         alert(this.uiLabels.maxStock);
@@ -190,13 +190,13 @@ export default {
     removeFromOrder:function (item) {
         if( this.chosenIngredients.indexOf(item) !== -1 ){
             this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
+            this.price -= item.selling_price;
             if(this.chosenIngredientsId[item.ingredient_id].quantity > 1){
                 this.chosenIngredientsId[item.ingredient_id].quantity -= 1;
             }
             else{
                 delete this.chosenIngredientsId[item.ingredient_id];
             }
-          this.price -= item.selling_price;
         }
     },
     placeOrder: function () {
@@ -330,7 +330,7 @@ export default {
 }
 .grid-item-header{
   color: white;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   border: solid black;
   border-width: 4px 4px 2px 4px;
@@ -340,7 +340,7 @@ export default {
 
 .grid-item-row{
   border: solid 2px black;
-  font-size: 20px;
+  font-size: 18px;
   padding: 30px 0;
   align-content: center;
 }
@@ -361,6 +361,6 @@ export default {
     font-size: 20pt;
 }
 .price{
-  font-size: 20px;
+  font-size: 18px;
 }
 </style>

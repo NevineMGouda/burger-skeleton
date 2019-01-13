@@ -73,13 +73,24 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="mbr-text py-5 mbr-fonts-style display-7">
-                      {{chosenIngredients}}
                       <strong>
-                        {{ chosenIngredients.map(item => item["ingredient_"+getLang(uiLabels.language)]).join(', ') }}
+                        <div class="container" v-if=" Object.keys(chosenIngredientsId).length !== 0">
+                          <div class="row grid-item-header">
+                            <div class = "col"> {{uiLabels.ingredients}} </div>
+                            <div class = "col"> {{uiLabels.quantity}} </div>
+                          </div>
+                          <div v-for="chosen in chosenIngredientsId" class="row grid-item-row">
+                            <div class = "col">
+                              {{chosen["ingredient_"+getLang(uiLabels.language)]}}
+                            </div>
+                            <div class = "col">
+                              {{chosen.quantity}}
+                            </div>
+                          </div>
+                        </div>
                       </strong>
-
                       <br>
-                      <strong>
+                      <strong class="price">
                         <span v-if="chosenIngredients.length != '0'"> {{uiLabels.price}}: {{ price }} kr </span>
                       </strong>
                     </p>
@@ -135,6 +146,7 @@ export default {
   data: function() { //Not that data is a function!
     return {
       chosenIngredients: [],
+      chosenIngredientsId: {},
       price: 0,
       orderNumber: "",
       ordertocart:''
@@ -159,6 +171,13 @@ export default {
       if(item.stock >= 1){
         this.chosenIngredients.push(item);
         this.price += +item.selling_price;
+          if (item.ingredient_id in this.chosenIngredientsId){
+              this.chosenIngredientsId[item.ingredient_id].quantity += 1;
+          }
+          else{
+              this.chosenIngredientsId[item.ingredient_id] = item;
+              this.chosenIngredientsId[item.ingredient_id].quantity = 1;
+          }
       }
       else{
         alert(this.uiLabels.maxStock);
@@ -169,6 +188,12 @@ export default {
         if( this.chosenIngredients.indexOf(item) !== -1 ){
           this.chosenIngredients.splice( this.chosenIngredients.indexOf(item), 1 );
           this.price -= +item.selling_price;
+            if(this.chosenIngredientsId[item.ingredient_id].quantity > 1){
+                this.chosenIngredientsId[item.ingredient_id].quantity -= 1;
+            }
+            else{
+                delete this.chosenIngredientsId[item.ingredient_id];
+            }
         }
     },
     placeOrder: function () {
@@ -210,6 +235,7 @@ export default {
             }
             this.price = 0;
             this.chosenIngredients = [];
+            this.chosenIngredientsId = {};
             alert(this.uiLabels.itemSuccess);
         }
     },
@@ -303,5 +329,26 @@ export default {
     /*padding-top: 40px;*/
     padding-bottom: 20px;
     font-size: 20pt;
+}
+
+.grid-item-header{
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  border: solid black;
+  border-width: 4px 4px 2px 4px;
+  padding: 4px;
+  background: #149dcc;
+}
+
+.grid-item-row{
+  border: solid 2px black;
+  font-size: 18px;
+  padding: 30px 0;
+  align-content: center;
+}
+
+.price {
+  font-size: 18px;
 }
 </style>
