@@ -31,7 +31,7 @@
           <div class="panel-heading">{{ uiLabels.ordersFinished }}</div>
           <div class="panel-body">
             <div class="table-wrapper-scroll-y">
-              <table class="table" width="100%">
+              <table class="table-responsive" width="100%">
                 <thead> 
                   <tr> 
                     <th class="nowrap">{{uiLabels.orderNumber}}</th> 
@@ -207,13 +207,13 @@ export default {
   .panel-body {
     padding: 15px;
   }.
-  /*.table-responsive{
+  .table-responsive{
     overflow-x: hidden !important;
     overflow-y: auto !important;
-  }*/
+  }
   .table-wrapper-scroll-y {
     display: block;
-    max-height: 200px;
+    max-height: 100%;
     overflow-y: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
@@ -230,18 +230,18 @@ export default {
   }
   .lang-btn {
     margin: 10px;
-    color: rgba(103, 192, 103, 0.75);
+    color: #337ab7;
     letter-spacing: 1px;
     line-height: 15px;
-    border: 2px solid rgba(103, 192, 103, 0.75);
+    border: 2px solid #337ab7;
     border-radius: 40px;
     background: transparent;
     transition: all 0.3s ease 0s;
   }
     .lang-btn:hover {
       color: #FFF;
-      background: rgb(103, 192, 103, 0.75);
-      border: 2px solid rgb(103, 192, 103, 0.75);
+      background: #337ab7;
+      border: 2px solid #337ab7;
     }
 
 </style>

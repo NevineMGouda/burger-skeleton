@@ -68,14 +68,14 @@ export default {
   }
   .btn-success {
     color: #fff !important;
-    background-color: #218838 !important;
-    border-color: #1e7e34 !important;
+    background-color: #337ab7 !important;
+    border-color: #337ab7 !important;
   }
   .btn-success,
   .btn-success:hover {
     color: #fff;
-    background-color: #218838;
-    border-color: #1e7e34;
+    background-color: #337ab7;
+    border-color: #337ab7;
   }
   /*.btn-success:active {
     background-color: green !important;
@@ -84,10 +84,10 @@ export default {
   }*/
 
   .btn {
-    display: inline-block;
+    display: block;
     font-weight: 400;
     text-align: center;
-    white-space: nowrap;
+    white-space: pre-wrap;
     vertical-align: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
