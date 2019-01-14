@@ -34,13 +34,13 @@
               <table class="table-responsive" width="100%">
                 <thead> 
                   <tr> 
-                    <th class="nowrap">{{uiLabels.orderNumber}}</th> 
-                    <th>{{uiLabels.eatInOrTakeAway}}</th> 
-                    <th>{{uiLabels.ingredients}}</th> 
+                    <th class="nowrap table-header">{{uiLabels.orderNumber}}</th>
+                    <th class ="table-header">{{uiLabels.eatInOrTakeAway}}</th>
+                    <th class ="table-header">{{uiLabels.ingredients}}</th>
                   </tr> 
                 </thead>
 
-                <tr v-for="(order, orderkey) in orders" v-if="order.status === 'done'" :key="orderkey" > 
+                <tr v-for="(order, orderkey) in orders" v-if="order.status === 'done'" :key="orderkey" class="table-row">
                   <th scope="row">{{orderkey}}</th> 
                   <td>
                     <span class="nowrap">
@@ -238,10 +238,17 @@ export default {
     background: transparent;
     transition: all 0.3s ease 0s;
   }
-    .lang-btn:hover {
-      color: #FFF;
-      background: #337ab7;
-      border: 2px solid #337ab7;
-    }
+  .lang-btn:hover {
+    color: #FFF;
+    background: #337ab7;
+    border: 2px solid #337ab7;
+  }
+  .table-header{
+    padding: 5px;
+    text-align: center;
+  }
+  .table-row{
+    text-align: center;
+  }
 
 </style>

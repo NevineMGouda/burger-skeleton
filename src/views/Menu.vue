@@ -2,17 +2,19 @@
   <section class="features8 cid-rdbXcsSWfw" id="features8-4">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
   <div class="container" id ="eatInOrTakeAway">
-    <div class="media-container-row">
-      <div class="col-12 col-md-12 nav">
-        <button class="btn btn-primary display-4 disabled">
-          <span aria-hidden="true">&larr;</span>   {{uiLabels.previous}}
-        </button>
-        <span class="nextButton">
-          <button class="btn btn-primary nextButton display-4" v-on:click="switchMenu()">{{uiLabels.next}}
-            <span aria-hidden="true">&rarr;</span>
-          </button>
-        </span>
-      </div>
+    <div class="media-container-row container-fluid">
+          <div class="col">
+            <button class="btn btn-primary display-4 disabled">
+              <span aria-hidden="true">&larr;</span>   {{uiLabels.previous}}
+            </button>
+          </div>
+          <div class="col-2 nextButton">
+            <span class="mbr-section-btn text-center">
+              <button class="btn btn-primary display-4" v-on:click="switchMenu()">{{uiLabels.next}}
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </span>
+          </div>
     </div>
     <br>
     <br>
@@ -46,13 +48,15 @@
     </div>
   </div>
   <div class="container" id ="readyOrCustom">
-    <div class="media-container-row">
-      <div class="col-12 col-md-12 nav">
+    <div class="media-container-row container-fluid">
+      <div class="col">
         <button class="btn btn-primary display-4" v-on:click="switchMenu()">
           <span aria-hidden="true">&larr;</span>   {{uiLabels.previous}}
         </button>
-        <span class="nextButton">
-          <button class="btn btn-primary nextButton display-4 disabled" > {{uiLabels.next}}
+      </div>
+      <div class="col-2 nextButton">
+          <span class="mbr-section-btn text-center">
+          <button class="btn btn-primary display-4 disabled">{{uiLabels.next}}
             <span aria-hidden="true">&rarr;</span>
           </button>
         </span>
@@ -169,7 +173,7 @@ export default {
   padding-bottom: 155px;
 }
 .nextButton{
-  margin-left: 67%;
+  margin-right: 1%;
 }
 .nav .btn {
   margin-left: 1px;
